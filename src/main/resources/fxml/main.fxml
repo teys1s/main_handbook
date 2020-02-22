@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.MainController">
+   <children>
+      <TableView id="table" fx:id="table" layoutX="3.0" layoutY="123.0" prefHeight="273.0" prefWidth="593.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="123.0">
+         <columns>
+            <TableColumn id="name" fx:id="name" prefWidth="75.0" text="name" />
+            <TableColumn id="connection_name" fx:id="connection_name" prefWidth="114.0" text="con. name" />
+            <TableColumn id="connection_type" fx:id="connection_type" prefWidth="36.0" text="type" />
+            <TableColumn id="platform" fx:id="platform" prefWidth="75.0" text="platform" />
+            <TableColumn id="protocol" fx:id="protocol" prefWidth="75.0" text="protocol" />
+            <TableColumn id="counterparty" fx:id="counterparty" prefWidth="75.0" text="counterparty" />
+            <TableColumn id="area" fx:id="area" prefWidth="75.0" text="area" />
+            <TableColumn id="contacts" fx:id="contacts" prefWidth="75.0" text="contacts" />
+            <TableColumn id="manager" fx:id="manager" prefWidth="75.0" text="manager" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Button layoutX="32.0" layoutY="29.0" mnemonicParsing="false" onAction="#add" text="add" />
+   </children>
+</AnchorPane>
