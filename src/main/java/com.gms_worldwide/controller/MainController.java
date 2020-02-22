@@ -76,7 +76,7 @@ public class MainController {
                 String y = Integer.toString(j);
                 list.add(y);
             }
-            Customer customer = new Customer(i, x, x, x, x, x, x, x, list, x);
+            Customer customer = new Customer(x, x, x, x, x, x, x, list, x);
             customers.add(customer);
         }
         return customers;

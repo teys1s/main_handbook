@@ -1,5 +1,7 @@
 package com.gms_worldwide;
 
+import com.gms_worldwide.controller.MainController;
+import com.gms_worldwide.repos.CustomerRepos;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +17,9 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(new Scene(root));
         stage.show();
+        //CustomerRepos repos = new CustomerRepos();
+        //MainController controller = loader.getController();
+        //System.out.println(controller);
     }
 
     public static void main(String[] args) {

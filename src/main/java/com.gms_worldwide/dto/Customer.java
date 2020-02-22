@@ -1,10 +1,15 @@
 package com.gms_worldwide.dto;
 
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "customer")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String connectionName;
@@ -13,11 +18,12 @@ public class Customer {
     private String connectionProtocol;
     private String counterpartyType;
     private String area;
+
+    @ElementCollection
     private List<String> contacts;
     private String manager;
 
-    public Customer(long id, String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, List<String> contacts, String manager) {
-        this.id = id;
+    public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, List<String> contacts, String manager) {
         this.name = name;
         this.connectionName = connectionName;
         this.connectionType = connectionType;
@@ -29,13 +35,13 @@ public class Customer {
         this.manager = manager;
     }
 
+    public Customer() {
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
