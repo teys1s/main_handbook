@@ -12,7 +12,7 @@ public class MainApp extends Application {
         String fxmlFile = "/fxml/main.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("Handbook GMS");
         stage.setScene(new Scene(root));
         stage.show();
 

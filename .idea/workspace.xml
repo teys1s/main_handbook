@@ -3,17 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="dfcf32bc-25f2-46d2-a648-8d7787aa8b17" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/MainApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/dto/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/dto/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/repos/CustomerRepos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/repos/CustomerRepos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/service/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/MainApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/dto/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/dto/Customer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/repos/CustomerRepos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/repos/CustomerRepos.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/service/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/service/CustomerService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/main.fxml" afterDir="false" />
     </list>
@@ -115,10 +112,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="149" key="#Project_Structure/0.0.1280.984@0.0.1280.984" timestamp="1582376756865" />
-    <state x="445" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1582635056099">
+    <state x="445" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1582899419990">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="445" y="207" key="#com.intellij.ide.util.MemberChooser/0.0.1280.984@0.0.1280.984" timestamp="1582635056099" />
+    <state x="445" y="207" key="#com.intellij.ide.util.MemberChooser/0.0.1280.984@0.0.1280.984" timestamp="1582899419990" />
     <state x="294" y="416" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1582634994200">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
@@ -127,26 +124,30 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="436" y="371" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1280.984@0.0.1280.984" timestamp="1582634950588" />
-    <state x="399" y="188" key="FileChooserDialogImpl" timestamp="1582629501564">
+    <state x="92" y="92" width="1096" height="800" key="DiffContextDialog" timestamp="1582886971776">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="399" y="188" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1582629501564" />
-    <state width="1236" height="259" key="GridCell.Tab.0.bottom" timestamp="1582879307776">
+    <state x="92" y="92" width="1096" height="800" key="DiffContextDialog/0.0.1280.984@0.0.1280.984" timestamp="1582886971776" />
+    <state x="399" y="188" key="FileChooserDialogImpl" timestamp="1582886178217">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1582879307776" />
-    <state width="1236" height="259" key="GridCell.Tab.0.center" timestamp="1582879307776">
+    <state x="399" y="188" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1582886178217" />
+    <state width="1236" height="259" key="GridCell.Tab.0.bottom" timestamp="1582900958174">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1582879307776" />
-    <state width="1236" height="259" key="GridCell.Tab.0.left" timestamp="1582879307776">
+    <state width="1236" height="259" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1582900958174" />
+    <state width="1236" height="259" key="GridCell.Tab.0.center" timestamp="1582900958174">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1582879307776" />
-    <state width="1236" height="259" key="GridCell.Tab.0.right" timestamp="1582879307776">
+    <state width="1236" height="259" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1582900958174" />
+    <state width="1236" height="259" key="GridCell.Tab.0.left" timestamp="1582900958173">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1582879307776" />
+    <state width="1236" height="259" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1582900958173" />
+    <state width="1236" height="259" key="GridCell.Tab.0.right" timestamp="1582900958174">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1236" height="259" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1582900958174" />
     <state x="120" y="65" key="SettingsEditor" timestamp="1582376737778">
       <screen x="0" y="0" width="1280" height="984" />
     </state>

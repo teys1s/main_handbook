@@ -2,17 +2,28 @@ package com.gms_worldwide.controller;
 
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.service.CustomerService;
+import javafx.beans.binding.IntegerBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+
 
 import java.util.List;
+
+import static javafx.beans.binding.Bindings.createObjectBinding;
+import static javafx.beans.binding.Bindings.selectInteger;
 
 public class MainController {
 
@@ -41,19 +52,68 @@ public class MainController {
     TableColumn<Customer, String> contacts;
     @FXML
     TableColumn<Customer, String> manager;
+    @FXML
+    TextField search;
 
 
     @FXML
     public void initialize() {
         this.customerService = new CustomerService();
-        fillTable(customerService.getCustomers());
+        setTable(customerService.getCustomers());
+        search.textProperty().addListener((ov, oldV, newV) -> {
+            if (!newV.trim().isEmpty()) {
+                searchCustomer(newV);
+            } else {
+                ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customerService.getCustomers());
+                table.setItems(observedCustomers);
+            }
+        });
 
     }
 
-    private void fillTable(List<Customer> customers) {
-        ObservableList<Customer> customers1 = FXCollections.observableArrayList(customers);
+    private void setTable(List<Customer> customers) {
+        ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customers);
         table.setEditable(true);
-        table.setItems(customers1);
+        table.setItems(observedCustomers);
+        setCells();
+        table.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.DELETE) {
+                    System.out.println("here");
+                    delete();
+                }
+            }
+        });
+
+        setRows();
+
+
+    }
+
+    public void add() {
+        ObservableList<Customer> customers = table.getItems();
+        Customer customer = new Customer();
+        customers.add(customer);
+        customerService.add(customer);
+        this.table.setItems(customers);
+    }
+
+    public void update(Customer customer) {
+        customerService.update(customer);
+    }
+
+    public void delete() {
+        int row = table.getSelectionModel().getFocusedIndex();
+        Customer customer = table.getItems().get(row);
+        customerService.delete(customer);
+        customerService.getCustomers().remove(customer);
+        ObservableList<Customer> customers = FXCollections.observableArrayList(customerService.getCustomers());
+        table.setItems(customers);
+        setRows();
+    }
+
+    private void setCells() {
         name.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
         name.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
         name.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
@@ -144,29 +204,27 @@ public class MainController {
             customer.setContacts(newValue);
             update(customer);
         });
-
-
     }
 
-
-    public void add() {
-        ObservableList<Customer> customers = table.getItems();
-        Customer customer = new Customer();
-        customers.add(customer);
-        customerService.add(customer);
-        this.table.setItems(customers);
+    private void searchCustomer(String text) {
+        List<Customer> customers = customerService.searchCustomer(text);
+        ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customers);
+        table.setItems(observedCustomers);
     }
 
-    public void update(Customer customer) {
-        customerService.update(customer);
+    private void setRows(){
+        table.setRowFactory(table -> new TableRow<Customer>() {
+            @Override
+            protected void updateItem(Customer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    setStyle("-fx-background-color: TURQUOISE;\n" +
+                            "    -fx-background-insets: 0, 1, 2;\n" +
+                            "    -fx-background: -fx-accent;\n" +
+                            "    -fx-text-fill: -fx-selection-bar-text;");
+                }
+            }
+        });
     }
 
-    public void delete() {
-        int row = table.getSelectionModel().getFocusedIndex();
-        Customer customer = table.getItems().get(row);
-        customerService.delete(customer);
-        customerService.getCustomers().remove(customer);
-        ObservableList<Customer> customers = FXCollections.observableArrayList(customerService.getCustomers());
-        table.setItems(customers);
-    }
 }
