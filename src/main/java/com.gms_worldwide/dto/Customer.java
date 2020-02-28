@@ -2,7 +2,6 @@ package com.gms_worldwide.dto;
 
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -18,12 +17,11 @@ public class Customer {
     private String connectionProtocol;
     private String counterpartyType;
     private String area;
-
-    @ElementCollection
-    private List<String> contacts;
+    private String contacts;
     private String manager;
 
-    public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, List<String> contacts, String manager) {
+
+    public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, String contacts, String manager) {
         this.name = name;
         this.connectionName = connectionName;
         this.connectionType = connectionType;
@@ -99,11 +97,11 @@ public class Customer {
         this.area = area;
     }
 
-    public List<String> getContacts() {
+    public String getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<String> contacts) {
+    public void setContacts(String contacts) {
         this.contacts = contacts;
     }
 
@@ -113,6 +111,40 @@ public class Customer {
 
     public void setManager(String manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (id != customer.id) return false;
+        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
+        if (connectionName != null ? !connectionName.equals(customer.connectionName) : customer.connectionName != null) return false;
+        if (connectionType != null ? !connectionType.equals(customer.connectionType) : customer.connectionType != null) return false;
+        if (platform != null ? !platform.equals(customer.platform) : customer.platform != null) return false;
+        if (connectionProtocol != null ? !connectionProtocol.equals(customer.connectionProtocol) : customer.connectionProtocol != null) return false;
+        if (counterpartyType != null ? !counterpartyType.equals(customer.counterpartyType) : customer.counterpartyType != null) return false;
+        if (area != null ? !area.equals(customer.area) : customer.area != null) return false;
+        if (contacts != null ? !contacts.equals(customer.contacts) : customer.contacts != null) return false;
+        return manager != null ? manager.equals(customer.manager) : customer.manager == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (connectionName != null ? connectionName.hashCode() : 0);
+        result = 31 * result + (connectionType != null ? connectionType.hashCode() : 0);
+        result = 31 * result + (platform != null ? platform.hashCode() : 0);
+        result = 31 * result + (connectionProtocol != null ? connectionProtocol.hashCode() : 0);
+        result = 31 * result + (counterpartyType != null ? counterpartyType.hashCode() : 0);
+        result = 31 * result + (area != null ? area.hashCode() : 0);
+        result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
+        result = 31 * result + (manager != null ? manager.hashCode() : 0);
+        return result;
     }
 
     @Override

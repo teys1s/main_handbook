@@ -5,12 +5,13 @@ import com.gms_worldwide.service.CustomerService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
@@ -37,7 +38,7 @@ public class MainController {
     @FXML
     TableColumn<Customer, String> area;
     @FXML
-    TableColumn<Customer, List<String>> contacts;
+    TableColumn<Customer, String> contacts;
     @FXML
     TableColumn<Customer, String> manager;
 
@@ -45,9 +46,7 @@ public class MainController {
     @FXML
     public void initialize() {
         this.customerService = new CustomerService();
-        customerService.setCustomers(addTestCustomers());
         fillTable(customerService.getCustomers());
-
 
     }
 
@@ -56,36 +55,118 @@ public class MainController {
         table.setEditable(true);
         table.setItems(customers1);
         name.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+        name.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        name.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setName(newValue);
+            update(customer);
+        });
         connection_name.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionName"));
+        connection_name.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        connection_name.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setConnectionName(newValue);
+            update(customer);
+        });
         connection_type.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionType"));
+        connection_type.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        connection_type.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setConnectionType(newValue);
+            update(customer);
+        });
         platform.setCellValueFactory(new PropertyValueFactory<Customer, String>("platform"));
+        platform.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        platform.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setPlatform(newValue);
+            update(customer);
+        });
         protocol.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionProtocol"));
+        protocol.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        protocol.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setConnectionProtocol(newValue);
+            update(customer);
+        });
         counterparty.setCellValueFactory(new PropertyValueFactory<Customer, String>("counterpartyType"));
+        counterparty.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        counterparty.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setCounterpartyType(newValue);
+            update(customer);
+        });
         area.setCellValueFactory(new PropertyValueFactory<Customer, String>("area"));
+        area.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        area.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setArea(newValue);
+            update(customer);
+        });
         manager.setCellValueFactory(new PropertyValueFactory<Customer, String>("manager"));
-        contacts.setCellValueFactory(new PropertyValueFactory<Customer, List<String>>("contacts"));
-        System.out.println(table);
+        manager.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        manager.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setManager(newValue);
+            update(customer);
+        });
+        contacts.setCellValueFactory(new PropertyValueFactory<Customer, String>("contacts"));
+        contacts.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        contacts.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
+            TablePosition<Customer, String> pos = event.getTablePosition();
+            String newValue = event.getNewValue();
+            int row = pos.getRow();
+            Customer customer = event.getTableView().getItems().get(row);
+            customer.setContacts(newValue);
+            update(customer);
+        });
+
+
     }
 
-    private List<Customer> addTestCustomers(){
-        List<Customer> customers = new ArrayList<Customer>();
-        for (int i = 0; i < 5; i++) {
-            String x = Integer.toString(i);
-            List<String> list = new ArrayList<String>();
-            for (int j = 0; j < 2; j++) {
-                String y = Integer.toString(j);
-                list.add(y);
-            }
-            Customer customer = new Customer(x, x, x, x, x, x, x, list, x);
-            customers.add(customer);
-        }
-        return customers;
-    }
 
-    public void add(){
-        customerService.add();
-        System.out.println(customerService.getCustomers());
-        ObservableList<Customer> customers = FXCollections.observableArrayList(customerService.getCustomers());
+    public void add() {
+        ObservableList<Customer> customers = table.getItems();
+        Customer customer = new Customer();
+        customers.add(customer);
+        customerService.add(customer);
         this.table.setItems(customers);
+    }
+
+    public void update(Customer customer) {
+        customerService.update(customer);
+    }
+
+    public void delete() {
+        int row = table.getSelectionModel().getFocusedIndex();
+        Customer customer = table.getItems().get(row);
+        customerService.delete(customer);
+        customerService.getCustomers().remove(customer);
+        ObservableList<Customer> customers = FXCollections.observableArrayList(customerService.getCustomers());
+        table.setItems(customers);
     }
 }

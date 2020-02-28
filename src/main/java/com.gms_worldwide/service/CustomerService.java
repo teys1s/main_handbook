@@ -12,7 +12,8 @@ public class CustomerService {
     private CustomerRepos customerRepos;
 
     public CustomerService() {
-       customerRepos = new CustomerRepos();
+        this.customerRepos = new CustomerRepos();
+        this.customers = getAllCustomers();
     }
 
     public CustomerRepos getCustomerRepos() {
@@ -31,12 +32,31 @@ public class CustomerService {
         this.customers = customers;
     }
 
-    public void add() {
-        List<String> strings = new ArrayList<String>();
-        strings.add("7");
-        strings.add("7");
-        Customer customer = new Customer("7", "7", "7", "7", "7", "7", "7", strings, "7");
+    public void add(Customer customer) {
         customerRepos.addCustomer(customer);
-        customers.add(customer);
+        this.customers = getAllCustomers();
+    }
+
+    private List<Customer> getAllCustomers() {
+        return customerRepos.getAllCustomers();
+    }
+
+    private List<Customer> addTestCustomers() {
+        List<Customer> customers = new ArrayList<Customer>();
+        for (int i = 0; i < 5; i++) {
+            String x = Integer.toString(i);
+            Customer customer = new Customer(x, x, x, x, x, x, x, x, x);
+            customers.add(customer);
+        }
+        return customers;
+    }
+
+    public void delete(Customer customer) {
+        customerRepos.delete(customer);
+    }
+
+    public void update(Customer customer) {
+        customerRepos.update(customer);
+
     }
 }

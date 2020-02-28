@@ -3,10 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.MainController">
    <children>
-      <TableView id="table" fx:id="table" layoutX="3.0" layoutY="123.0" prefHeight="273.0" prefWidth="593.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="123.0">
+      <TableView id="table" fx:id="table" layoutX="3.0" layoutY="123.0" prefHeight="273.0" prefWidth="593.0" style="-fx-background-color: teal;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="123.0">
          <columns>
             <TableColumn id="name" fx:id="name" prefWidth="75.0" text="name" />
             <TableColumn id="connection_name" fx:id="connection_name" prefWidth="114.0" text="con. name" />
@@ -23,5 +22,6 @@
          </columnResizePolicy>
       </TableView>
       <Button layoutX="32.0" layoutY="29.0" mnemonicParsing="false" onAction="#add" text="add" />
+      <Button layoutX="179.0" layoutY="29.0" mnemonicParsing="false" onAction="#delete" text="delete" />
    </children>
 </AnchorPane>
