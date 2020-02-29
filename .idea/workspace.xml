@@ -3,14 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="dfcf32bc-25f2-46d2-a648-8d7787aa8b17" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/MainApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/dto/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/dto/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/service/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/MainApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/dto/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/dto/Customer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/service/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/service/CustomerService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/main.fxml" afterDir="false" />
     </list>
@@ -56,26 +54,30 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Laboratory" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/fxml" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Programming\projects\IdeaProjects\handbook\src\main\java" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.gms_worldwide" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\projects\IdeaProjects\handbook\src\main\resources\fxml" />
       <recent name="D:\Programming\projects\IdeaProjects\handbook\src\main\resources" />
       <recent name="D:\Programming\projects\IdeaProjects\handbook\src\main\java\com.gms_worldwide" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.gms_worldwide.controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\projects\IdeaProjects\handbook\src\main\java" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="MainApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.gms_worldwide.MainApp" />
       <module name="handbook" />
       <extension name="coverage">
@@ -88,11 +90,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.MainApp" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -128,29 +125,29 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="92" y="92" width="1096" height="800" key="DiffContextDialog/0.0.1280.984@0.0.1280.984" timestamp="1582886971776" />
-    <state x="399" y="188" key="FileChooserDialogImpl" timestamp="1582886178217">
+    <state x="399" y="188" key="FileChooserDialogImpl" timestamp="1583014765614">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="399" y="188" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1582886178217" />
-    <state width="1236" height="259" key="GridCell.Tab.0.bottom" timestamp="1582900958174">
+    <state x="399" y="188" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1583014765614" />
+    <state width="1236" height="198" key="GridCell.Tab.0.bottom" timestamp="1583015632353">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1582900958174" />
-    <state width="1236" height="259" key="GridCell.Tab.0.center" timestamp="1582900958174">
+    <state width="1236" height="198" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1583015632353" />
+    <state width="1236" height="198" key="GridCell.Tab.0.center" timestamp="1583015632352">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1582900958174" />
-    <state width="1236" height="259" key="GridCell.Tab.0.left" timestamp="1582900958173">
+    <state width="1236" height="198" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1583015632352" />
+    <state width="1236" height="198" key="GridCell.Tab.0.left" timestamp="1583015632352">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1582900958173" />
-    <state width="1236" height="259" key="GridCell.Tab.0.right" timestamp="1582900958174">
+    <state width="1236" height="198" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1583015632352" />
+    <state width="1236" height="198" key="GridCell.Tab.0.right" timestamp="1583015632352">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="259" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1582900958174" />
-    <state x="120" y="65" key="SettingsEditor" timestamp="1582376737778">
+    <state width="1236" height="198" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1583015632352" />
+    <state x="120" y="65" key="SettingsEditor" timestamp="1583015288123">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="120" y="65" key="SettingsEditor/0.0.1280.984@0.0.1280.984" timestamp="1582376737778" />
+    <state x="120" y="65" key="SettingsEditor/0.0.1280.984@0.0.1280.984" timestamp="1583015288123" />
   </component>
 </project>

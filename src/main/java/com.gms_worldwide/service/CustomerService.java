@@ -2,6 +2,7 @@ package com.gms_worldwide.service;
 
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.repos.CustomerRepos;
+import javafx.scene.control.CheckBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,12 +46,16 @@ public class CustomerService {
         return customerRepos.getAllCustomers();
     }
 
-    private void fillExceptionStrings(){
-        exceptionStrings.put("СКАРПЕЛ","SCARPEL");
-        exceptionStrings.put("КЛІЄНТ","CLIENT");
-        exceptionStrings.put("КЛИЕНТ","CLIENT");
-        exceptionStrings.put("КЛИЕНТ","CLIENT");
-        exceptionStrings.put("КЛИЕНТ","CLIENT");
+    private void fillExceptionStrings() {
+        exceptionStrings.put("СКАРПЕЛ", "SCARPEL");
+        exceptionStrings.put("КЛІЄНТ", "CLIENT");
+        exceptionStrings.put("КЛИЕНТ", "CLIENT");
+        exceptionStrings.put("КИЇВ", "KYIV");
+        exceptionStrings.put("KIEV", "KYIV");
+        exceptionStrings.put("КИЕВ", "KYIV");
+        exceptionStrings.put("KYIV", "KYIV");
+
+
     }
 
     private List<Customer> addTestCustomers() {
@@ -77,8 +82,8 @@ public class CustomerService {
 
         for (Customer customer : customers) {
             String customerText = toText(customer);
-            if (translitString(customerText.toUpperCase(),exceptionStrings).
-                    contains(translitString(text.toUpperCase(),exceptionStrings))) {
+            if (translitString(customerText.toUpperCase()).
+                    contains(translitString(text.toUpperCase()))) {
                 foundCustomers.add(customer);
             }
         }
@@ -100,7 +105,7 @@ public class CustomerService {
         return result;
     }
 
-    private static String translitLetter(char ch) {
+    private String translitLetter(char ch) {
         switch (ch) {
             case 'А':
                 return "A";
@@ -175,9 +180,9 @@ public class CustomerService {
         }
     }
 
-    private static String translitString(String s, Map<String,String> exceptionStrings) {
+    private String translitString(String s) {
         for (String s1 : exceptionStrings.keySet()) {
-            if (s.toUpperCase().equals(s1)){
+            if (s.toUpperCase().equals(s1)) {
                 return exceptionStrings.get(s1);
             }
         }
@@ -186,5 +191,175 @@ public class CustomerService {
             sb.append(translitLetter(ch));
         }
         return sb.toString();
+    }
+
+    public String findBy(String findText, int searchIndex, List<CheckBox> checkBoxes) {
+        switch (searchIndex) {
+            case 0:
+                return findByName(findText, checkBoxes);
+            case 1:
+                return findByConnectionType(findText, checkBoxes);
+            case 2:
+                return findByProtocol(findText, checkBoxes);
+            case 3:
+                return findByPlatform(findText, checkBoxes);
+            case 4:
+                return findByArea(findText, checkBoxes);
+            case 5:
+                return findByCounterparty(findText, checkBoxes);
+            case 6:
+                return findByManager(findText, checkBoxes);
+        }
+
+        return null;
+    }
+
+    private String findByName(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getName().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String findByConnectionType(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getConnectionType().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String findByProtocol(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getConnectionProtocol().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String findByPlatform(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getPlatform().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String findByCounterparty(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getCounterpartyType().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String findByManager(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getManager().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String findByArea(String findText, List<CheckBox> checkBoxes) {
+        String result = null;
+        for (Customer customer : customers) {
+            if (translitString(customer.getArea().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
+                if (result == null) {
+                    result = makeStringFromCustomer(customer, checkBoxes);
+                } else {
+                    result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String makeStringFromCustomer(Customer customer, List<CheckBox> checkBoxes) {
+        String result = null;
+        if (customer == null) {
+            return null;
+        }
+
+        for (CheckBox checkBox : checkBoxes) {
+            if (checkBox.isSelected()) {
+                if (result == null) {
+                    result = checkCheckBox(checkBox.getId(), customer);
+                } else {
+                    result = result + "| " + checkCheckBox(checkBox.getId(), customer);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private String checkCheckBox(String id, Customer customer) {
+        switch (id) {
+            case "name":
+                return customer.getName();
+            case "conn_name":
+                return customer.getConnectionName();
+            case "type":
+                return customer.getConnectionType();
+            case "protocol":
+                return customer.getConnectionProtocol();
+            case "platform":
+                return customer.getPlatform();
+            case "counterparty":
+                return customer.getCounterpartyType();
+            case "area":
+                return customer.getArea();
+            case "contacts":
+                return customer.getContacts();
+            case "manager":
+                return customer.getManager();
+            default:
+                return null;
+        }
     }
 }

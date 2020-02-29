@@ -2,35 +2,31 @@ package com.gms_worldwide.controller;
 
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.service.CustomerService;
-import javafx.beans.binding.IntegerBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
-
-import static javafx.beans.binding.Bindings.createObjectBinding;
-import static javafx.beans.binding.Bindings.selectInteger;
 
 public class MainController {
 
     private CustomerService customerService;
+    private FileChooser fileChooser = new FileChooser();
 
-    public MainController() {
-    }
 
     @FXML
     TableView<Customer> table;
@@ -86,7 +82,7 @@ public class MainController {
             }
         });
 
-        setRows();
+        //setRows();
 
 
     }
@@ -110,7 +106,6 @@ public class MainController {
         customerService.getCustomers().remove(customer);
         ObservableList<Customer> customers = FXCollections.observableArrayList(customerService.getCustomers());
         table.setItems(customers);
-        setRows();
     }
 
     private void setCells() {
@@ -212,7 +207,7 @@ public class MainController {
         table.setItems(observedCustomers);
     }
 
-    private void setRows(){
+    private void setRows() {
         table.setRowFactory(table -> new TableRow<Customer>() {
             @Override
             protected void updateItem(Customer item, boolean empty) {
@@ -225,6 +220,25 @@ public class MainController {
                 }
             }
         });
+    }
+
+    public void openNewStage() throws IOException {
+        Stage stage = new Stage();
+        String fxmlFile = "/fxml/alt.fxml";
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+        stage.setTitle("Customers");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.show();
+
+        AltController altController = loader.getController();
+        altController.setCustomerService(customerService);
+    }
+
+    public void loadFromFile() {
+
+        File file = fileChooser.showOpenDialog(new Stage());
     }
 
 }
