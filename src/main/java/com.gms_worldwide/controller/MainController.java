@@ -236,9 +236,14 @@ public class MainController {
         altController.setCustomerService(customerService);
     }
 
-    public void loadFromFile() {
+    @FXML
+    protected void loadFromFile(){
 
-        File file = fileChooser.showOpenDialog(new Stage());
+        Stage stage = new Stage();
+        File file = fileChooser.showOpenDialog(stage);
+
+
+        System.out.println(file.getName());
     }
 
 }
