@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dfcf32bc-25f2-46d2-a648-8d7787aa8b17" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.gms_worldwide/service/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/controller/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gms_worldwide/service/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gms_worldwide/service/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,22 +122,22 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="399" y="188" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1583014765614" />
-    <state width="1236" height="198" key="GridCell.Tab.0.bottom" timestamp="1583015632353">
+    <state width="1236" height="198" key="GridCell.Tab.0.bottom" timestamp="1583174817649">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="198" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1583015632353" />
-    <state width="1236" height="198" key="GridCell.Tab.0.center" timestamp="1583015632352">
+    <state width="1236" height="198" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1583174817649" />
+    <state width="1236" height="198" key="GridCell.Tab.0.center" timestamp="1583174817648">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="198" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1583015632352" />
-    <state width="1236" height="198" key="GridCell.Tab.0.left" timestamp="1583015632352">
+    <state width="1236" height="198" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1583174817648" />
+    <state width="1236" height="198" key="GridCell.Tab.0.left" timestamp="1583174817648">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="198" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1583015632352" />
-    <state width="1236" height="198" key="GridCell.Tab.0.right" timestamp="1583015632352">
+    <state width="1236" height="198" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1583174817648" />
+    <state width="1236" height="198" key="GridCell.Tab.0.right" timestamp="1583174817649">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state width="1236" height="198" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1583015632352" />
+    <state width="1236" height="198" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1583174817649" />
     <state x="120" y="65" key="SettingsEditor" timestamp="1583015288123">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
