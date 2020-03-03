@@ -3,7 +3,13 @@ package com.gms_worldwide.service;
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.repos.CustomerRepos;
 import javafx.scene.control.CheckBox;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -360,6 +366,41 @@ public class CustomerService {
                 return customer.getManager();
             default:
                 return null;
+        }
+    }
+
+    public void addCustomersFromFile(File absoluteFile) {
+
+        if (absoluteFile.toString().endsWith(".txt")) {
+
+            try (BufferedReader bf = new BufferedReader(new FileReader(absoluteFile))) {
+                List<String> strings = new ArrayList<>();
+                String line;
+                while ((line = bf.readLine()) != null) {
+                    strings.add(line);
+                }
+                strings.forEach(l -> System.out.println(l));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (absoluteFile.toString().endsWith(".docx")) {
+            try (FileInputStream fileReader = new FileInputStream(absoluteFile.toString())) {
+                XWPFDocument document = new XWPFDocument(OPCPackage.open(fileReader));
+
+                XWPFWordExtractor wordExtractor = new XWPFWordExtractor(document);
+                System.out.println(wordExtractor.getText());
+
+            } catch (FileNotFoundException e) {
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
