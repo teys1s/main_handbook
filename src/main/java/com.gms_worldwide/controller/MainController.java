@@ -241,9 +241,9 @@ public class MainController {
 
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
+        System.out.println(file.getAbsoluteFile().toString());
+        customerService.addCustomersFromFile(file.getAbsoluteFile());
 
-
-        System.out.println(file.getName());
     }
 
 }
