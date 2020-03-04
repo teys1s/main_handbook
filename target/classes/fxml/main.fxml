@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.MainController">
    <children>
@@ -28,8 +29,8 @@
             </ContextMenu>
          </contextMenu>
       </TableView>
-      <TextField fx:id="search" layoutX="14.0" layoutY="91.0" prefHeight="25.0" prefWidth="182.0" promptText="search" />
-      <MenuBar layoutX="3.0" layoutY="2.0">
+      <TextField fx:id="search" layoutX="400.0" layoutY="85.0" prefHeight="25.0" prefWidth="182.0" promptText="search" />
+      <MenuBar layoutX="3.0" layoutY="2.0" prefHeight="25.0" prefWidth="593.0" AnchorPane.bottomAnchor="373.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="2.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -39,7 +40,6 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#add" text="Add Customer" />
-                  <MenuItem mnemonicParsing="false" onAction="#delete" text="Delete Customer" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -49,7 +49,11 @@
           </Menu>
         </menus>
       </MenuBar>
-       <Button layoutX="511.0" layoutY="91.0" mnemonicParsing="false" onAction="#openNewStage" text="Unloading " />
+       <Button layoutX="362.0" layoutY="27.0" mnemonicParsing="false" onAction="#openNewStage" text="Unloading " />
        <Button layoutX="499.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadFromFile" text="load from file" />
+      <Button layoutX="25.0" layoutY="85.0" mnemonicParsing="false" onAction="#add" text="+">
+         <font>
+            <Font name="Bell MT" size="16.0" />
+         </font></Button>
    </children>
 </AnchorPane>
