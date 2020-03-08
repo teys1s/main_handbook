@@ -149,14 +149,14 @@ public class Customer {
 
     @Override
     public String toString() {
-        return
-                ", name='" + name + '\'' +
+        return "Customer{" +
+                "name='" + name + '\'' +
                 ", connectionName='" + connectionName + '\'' +
-                ", connectionType=" + connectionType +
+                ", connectionType='" + connectionType + '\'' +
                 ", platform='" + platform + '\'' +
-                ", connectionProtocol=" + connectionProtocol +
-                ", counterpartyType=" + counterpartyType +
-                ", area=" + area +
+                ", connectionProtocol='" + connectionProtocol + '\'' +
+                ", counterpartyType='" + counterpartyType + '\'' +
+                ", area='" + area + '\'' +
                 ", contacts='" + contacts + '\'' +
                 ", manager='" + manager + '\'' +
                 '}';

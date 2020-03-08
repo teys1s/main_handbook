@@ -10,10 +10,7 @@ import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CustomerService {
 
@@ -44,8 +41,8 @@ public class CustomerService {
     }
 
     public void add(Customer customer) {
-        customerRepos.addCustomer(customer);
-        this.customers = getAllCustomers();
+        this.customerRepos.addCustomer(customer);
+        this.customers.add(customer);
     }
 
     private List<Customer> getAllCustomers() {
@@ -54,12 +51,15 @@ public class CustomerService {
 
     private void fillExceptionStrings() {
         exceptionStrings.put("СКАРПЕЛ", "SCARPEL");
+        exceptionStrings.put("СКАРПЭЛ", "SCARPEL");
         exceptionStrings.put("КЛІЄНТ", "CLIENT");
         exceptionStrings.put("КЛИЕНТ", "CLIENT");
         exceptionStrings.put("КИЇВ", "KYIV");
         exceptionStrings.put("KIEV", "KYIV");
         exceptionStrings.put("КИЕВ", "KYIV");
         exceptionStrings.put("KYIV", "KYIV");
+        exceptionStrings.put("КОМПАТЕЛ", "COMPATEL");
+        exceptionStrings.put("КОМПАТЭЛ", "COMPATEL");
 
 
     }
@@ -76,6 +76,7 @@ public class CustomerService {
 
     public void delete(Customer customer) {
         customerRepos.delete(customer);
+        customers.remove(customer);
     }
 
     public void update(Customer customer) {
@@ -88,13 +89,12 @@ public class CustomerService {
 
         for (Customer customer : customers) {
             String customerText = toText(customer);
+            customerText = customerText.replaceAll("null", "");
             if (translitString(customerText.toUpperCase()).
                     contains(translitString(text.toUpperCase()))) {
                 foundCustomers.add(customer);
             }
         }
-
-
         return foundCustomers;
     }
 
@@ -188,7 +188,7 @@ public class CustomerService {
 
     private String translitString(String s) {
         for (String s1 : exceptionStrings.keySet()) {
-            if (s.toUpperCase().equals(s1)) {
+            if (s.toUpperCase().trim().equals(s1)) {
                 return exceptionStrings.get(s1);
             }
         }
@@ -223,6 +223,9 @@ public class CustomerService {
     private String findByName(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getName() == null) {
+                continue;
+            }
             if (translitString(customer.getName().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -238,6 +241,9 @@ public class CustomerService {
     private String findByConnectionType(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getConnectionType() == null) {
+                continue;
+            }
             if (translitString(customer.getConnectionType().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -253,6 +259,9 @@ public class CustomerService {
     private String findByProtocol(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getConnectionProtocol() == null) {
+                continue;
+            }
             if (translitString(customer.getConnectionProtocol().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -268,6 +277,9 @@ public class CustomerService {
     private String findByPlatform(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getPlatform() == null) {
+                continue;
+            }
             if (translitString(customer.getPlatform().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -283,6 +295,9 @@ public class CustomerService {
     private String findByCounterparty(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getCounterpartyType() == null) {
+                continue;
+            }
             if (translitString(customer.getCounterpartyType().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -298,6 +313,9 @@ public class CustomerService {
     private String findByManager(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getManager() == null) {
+                continue;
+            }
             if (translitString(customer.getManager().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -313,6 +331,9 @@ public class CustomerService {
     private String findByArea(String findText, List<CheckBox> checkBoxes) {
         String result = null;
         for (Customer customer : customers) {
+            if (customer.getArea() == null) {
+                continue;
+            }
             if (translitString(customer.getArea().trim().toUpperCase()).contains(translitString(findText.trim().toUpperCase()))) {
                 if (result == null) {
                     result = makeStringFromCustomer(customer, checkBoxes);
@@ -370,21 +391,25 @@ public class CustomerService {
     }
 
     public void addCustomersFromFile(File absoluteFile) {
-
+        List<String> strings = new ArrayList<>();
+        List<Customer> newCustomers = new ArrayList<>();
         if (absoluteFile.toString().endsWith(".txt")) {
 
             try (BufferedReader bf = new BufferedReader(new FileReader(absoluteFile))) {
-                List<String> strings = new ArrayList<>();
+
                 String line;
                 while ((line = bf.readLine()) != null) {
                     strings.add(line);
                 }
-                strings.forEach(l -> System.out.println(l));
+                newCustomers = customerParse(strings);
+               // newCustomers.forEach(c -> System.out.println(c));
+                addAll(newCustomers);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
 
         if (absoluteFile.toString().endsWith(".docx")) {
@@ -393,6 +418,7 @@ public class CustomerService {
 
                 XWPFWordExtractor wordExtractor = new XWPFWordExtractor(document);
                 System.out.println(wordExtractor.getText());
+                strings.add(wordExtractor.getText());
 
             } catch (FileNotFoundException e) {
 
@@ -401,6 +427,31 @@ public class CustomerService {
             } catch (InvalidFormatException e) {
                 e.printStackTrace();
             }
+        }
+
+
+    }
+
+    private List<Customer> customerParse(List<String> strings) {
+        List<Customer> customers = new ArrayList<>();
+        for (String string : strings) {
+            String[] fields = string.split("\\|");
+            if (fields.length < 9) {
+                continue;
+            }
+            Customer customer = new Customer(fields[0].trim(), fields[1].trim(),
+                    fields[2].trim(), fields[3].trim(),
+                    fields[4].trim(), fields[5].trim(),
+                    fields[6].trim(), fields[7].trim(), fields[8].trim());
+
+            customers.add(customer);
+        }
+        return customers;
+    }
+
+    private void addAll(List<Customer> customers) {
+        for (Customer customer : customers) {
+            add(customer);
         }
     }
 }

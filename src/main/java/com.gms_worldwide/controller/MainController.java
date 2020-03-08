@@ -60,23 +60,25 @@ public class MainController {
             if (!newV.trim().isEmpty()) {
                 searchCustomer(newV);
             } else {
-                ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customerService.getCustomers());
-                table.setItems(observedCustomers);
+                setTableItems(customerService.getCustomers());
             }
         });
 
     }
 
-    private void setTable(List<Customer> customers) {
+    private void setTableItems(List<Customer> customers) {
         ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customers);
-        table.setEditable(true);
         table.setItems(observedCustomers);
+    }
+
+    private void setTable(List<Customer> customers) {
+        setTableItems(customerService.getCustomers());
+        table.setEditable(true);
         setCells();
         table.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.DELETE) {
-                    System.out.println("here");
                     delete();
                 }
             }
@@ -88,11 +90,9 @@ public class MainController {
     }
 
     public void add() {
-        ObservableList<Customer> customers = table.getItems();
         Customer customer = new Customer();
-        customers.add(customer);
         customerService.add(customer);
-        this.table.setItems(customers);
+        setTableItems(customerService.getCustomers());
     }
 
     public void update(Customer customer) {
@@ -103,9 +103,7 @@ public class MainController {
         int row = table.getSelectionModel().getFocusedIndex();
         Customer customer = table.getItems().get(row);
         customerService.delete(customer);
-        customerService.getCustomers().remove(customer);
-        ObservableList<Customer> customers = FXCollections.observableArrayList(customerService.getCustomers());
-        table.setItems(customers);
+        setTableItems(customerService.getCustomers());
     }
 
     private void setCells() {
@@ -203,8 +201,7 @@ public class MainController {
 
     private void searchCustomer(String text) {
         List<Customer> customers = customerService.searchCustomer(text);
-        ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customers);
-        table.setItems(observedCustomers);
+        setTableItems(customers);
     }
 
     private void setRows() {
@@ -237,12 +234,14 @@ public class MainController {
     }
 
     @FXML
-    protected void loadFromFile(){
+    protected void loadFromFile() {
 
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
         System.out.println(file.getAbsoluteFile().toString());
         customerService.addCustomersFromFile(file.getAbsoluteFile());
+
+        setTableItems(customerService.getCustomers());
 
     }
 
