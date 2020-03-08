@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="414.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.AltController">
+<AnchorPane prefHeight="414.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.AltController">
    <children>
       <TextArea fx:id="text" layoutX="14.0" layoutY="136.0" prefHeight="264.0" prefWidth="581.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="136.0" />
       <SplitMenuButton fx:id="search_by" layoutX="15.0" layoutY="104.0" mnemonicParsing="false" text="Search by">
@@ -27,24 +31,5 @@
       <CheckBox fx:id="area" layoutX="153.0" layoutY="67.0" mnemonicParsing="false" text="area" />
       <CheckBox fx:id="contacts" layoutX="268.0" layoutY="67.0" mnemonicParsing="false" text="contacts" />
       <CheckBox fx:id="manager" layoutX="379.0" layoutY="67.0" mnemonicParsing="false" text="manager" />
-      <MenuBar layoutX="7.0" layoutY="2.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
    </children>
 </AnchorPane>

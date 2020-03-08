@@ -7,11 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
+
     public void start(Stage stage) throws Exception {
 
         String fxmlFile = "/fxml/main.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+        //stage.setMaximized(true);
         stage.setTitle("Handbook GMS");
         stage.setScene(new Scene(root));
         stage.show();

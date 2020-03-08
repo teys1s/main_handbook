@@ -238,10 +238,33 @@ public class MainController {
 
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
-        System.out.println(file.getAbsoluteFile().toString());
-        customerService.addCustomersFromFile(file.getAbsoluteFile());
+        if (file != null) {
+            boolean isCorrect = customerService.addCustomersFromFile(file.getAbsoluteFile());
+            if (isCorrect) {
+                setTableItems(customerService.getCustomers());
+            } else {
+                openErrorDialog();
+            }
+        }
+    }
 
-        setTableItems(customerService.getCustomers());
+    private void openErrorDialog() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("OOOOOOOOU");
+        alert.setHeaderText("CRITICAL ERROR");
+        alert.setContentText("YOU CAN LOAD .txt FILES ONLY");
+
+        alert.showAndWait();
+    }
+
+    @FXML
+    protected void openAboutDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About Handbook");
+        alert.setHeaderText("GMS Handbook. \n Version 1.1");
+        alert.setContentText("\n\n\n Copyright © 2020 GMSU. All rights reserved.");
+
+        alert.showAndWait();
 
     }
 

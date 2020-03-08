@@ -60,6 +60,8 @@ public class CustomerService {
         exceptionStrings.put("KYIV", "KYIV");
         exceptionStrings.put("КОМПАТЕЛ", "COMPATEL");
         exceptionStrings.put("КОМПАТЭЛ", "COMPATEL");
+        exceptionStrings.put("ИНКОМИНГ", "INCOMING");
+        exceptionStrings.put("ІНКОМІНГ", "INCOMING");
 
 
     }
@@ -120,7 +122,7 @@ public class CustomerService {
             case 'В':
                 return "V";
             case 'Г':
-                return "H";
+                return "G";
             case 'Є':
                 return "IE";
             case 'Е':
@@ -390,9 +392,9 @@ public class CustomerService {
         }
     }
 
-    public void addCustomersFromFile(File absoluteFile) {
+    public boolean addCustomersFromFile(File absoluteFile) {
         List<String> strings = new ArrayList<>();
-        List<Customer> newCustomers = new ArrayList<>();
+        List<Customer> newCustomers;
         if (absoluteFile.toString().endsWith(".txt")) {
 
             try (BufferedReader bf = new BufferedReader(new FileReader(absoluteFile))) {
@@ -402,7 +404,6 @@ public class CustomerService {
                     strings.add(line);
                 }
                 newCustomers = customerParse(strings);
-               // newCustomers.forEach(c -> System.out.println(c));
                 addAll(newCustomers);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -410,26 +411,10 @@ public class CustomerService {
                 e.printStackTrace();
             }
 
+            return true;
+        }else{
+            return false;
         }
-
-        if (absoluteFile.toString().endsWith(".docx")) {
-            try (FileInputStream fileReader = new FileInputStream(absoluteFile.toString())) {
-                XWPFDocument document = new XWPFDocument(OPCPackage.open(fileReader));
-
-                XWPFWordExtractor wordExtractor = new XWPFWordExtractor(document);
-                System.out.println(wordExtractor.getText());
-                strings.add(wordExtractor.getText());
-
-            } catch (FileNotFoundException e) {
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InvalidFormatException e) {
-                e.printStackTrace();
-            }
-        }
-
-
     }
 
     private List<Customer> customerParse(List<String> strings) {
