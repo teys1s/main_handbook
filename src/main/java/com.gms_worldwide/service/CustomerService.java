@@ -1,13 +1,10 @@
 package com.gms_worldwide.service;
 
 import com.gms_worldwide.dto.Customer;
+import com.gms_worldwide.repos.FilterItemRepos;
+import com.gms_worldwide.repos.Repos;
 import com.gms_worldwide.repos.CustomerRepos;
 import javafx.scene.control.CheckBox;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
-import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.*;
 import java.util.*;
@@ -16,15 +13,22 @@ public class CustomerService {
 
     private List<Customer> customers;
     private CustomerRepos customerRepos;
-    private Map<String, String> exceptionStrings = new HashMap<>();
+    private FilterItemRepos filterItemRepos;
+    private Map<String, String> searchFilter = new HashMap<>();
 
     public CustomerService() {
         this.customerRepos = new CustomerRepos();
         this.customers = getAllCustomers();
-        fillExceptionStrings();
+        this.filterItemRepos = new FilterItemRepos();
+        fillSearchFilter();
+
+        /*for (Map.Entry<String, String> item : searchFilter.entrySet()) {
+            FilterItem filterItem = new FilterItem(item.getKey().trim().toUpperCase(), item.getValue().trim().toUpperCase());
+            filterItemRepos.add(filterItem);
+        }*/
     }
 
-    public CustomerRepos getCustomerRepos() {
+    public Repos getCustomerRepos() {
         return customerRepos;
     }
 
@@ -41,7 +45,7 @@ public class CustomerService {
     }
 
     public void add(Customer customer) {
-        this.customerRepos.addCustomer(customer);
+        this.customerRepos.add(customer);
         this.customers.add(customer);
     }
 
@@ -49,21 +53,25 @@ public class CustomerService {
         return customerRepos.getAllCustomers();
     }
 
-    private void fillExceptionStrings() {
-        exceptionStrings.put("СКАРПЕЛ", "SCARPEL");
-        exceptionStrings.put("СКАРПЭЛ", "SCARPEL");
-        exceptionStrings.put("КЛІЄНТ", "CLIENT");
-        exceptionStrings.put("КЛИЕНТ", "CLIENT");
-        exceptionStrings.put("КИЇВ", "KYIV");
-        exceptionStrings.put("KIEV", "KYIV");
-        exceptionStrings.put("КИЕВ", "KYIV");
-        exceptionStrings.put("KYIV", "KYIV");
-        exceptionStrings.put("КОМПАТЕЛ", "COMPATEL");
-        exceptionStrings.put("КОМПАТЭЛ", "COMPATEL");
-        exceptionStrings.put("ИНКОМИНГ", "INCOMING");
-        exceptionStrings.put("ІНКОМІНГ", "INCOMING");
+    private void fillSearchFilter() {
 
+        /*searchFilter.put("СКАРПЕЛ", "SCARPEL");
+        searchFilter.put("СКАРПЭЛ", "SCARPEL");
+        searchFilter.put("КЛІЄНТ", "CLIENT");
+        searchFilter.put("КЛИЕНТ", "CLIENT");
+        searchFilter.put("КИЇВ", "KYIV");
+        searchFilter.put("KIEV", "KYIV");
+        searchFilter.put("КИЕВ", "KYIV");
+        searchFilter.put("KYIV", "KYIV");
+        searchFilter.put("КОМПАТЕЛ", "COMPATEL");
+        searchFilter.put("КОМПАТЭЛ", "COMPATEL");
+        searchFilter.put("ИНКОМИНГ", "INCOMING");
+        searchFilter.put("ІНКОМІНГ", "INCOMING");*/
 
+        List<FilterItem> filterItems = filterItemRepos.getFilterTypes();
+        for (FilterItem filterType : filterItems) {
+            searchFilter.put(filterType.getSearchIn(), filterType.getSearchOut());
+        }
     }
 
     private List<Customer> addTestCustomers() {
@@ -189,9 +197,9 @@ public class CustomerService {
     }
 
     private String translitString(String s) {
-        for (String s1 : exceptionStrings.keySet()) {
+        for (String s1 : searchFilter.keySet()) {
             if (s.toUpperCase().trim().equals(s1)) {
-                return exceptionStrings.get(s1);
+                return searchFilter.get(s1);
             }
         }
         StringBuilder sb = new StringBuilder(s.length() * 2);
@@ -412,7 +420,7 @@ public class CustomerService {
             }
 
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -437,6 +445,39 @@ public class CustomerService {
     private void addAll(List<Customer> customers) {
         for (Customer customer : customers) {
             add(customer);
+        }
+    }
+
+    public boolean loadFilterItems(File file) {
+        Map<String, String> items = new HashMap<>();
+        List<FilterItem> filterItems;
+        if (file.toString().endsWith(".txt")) {
+
+            try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
+
+                String line;
+                while ((line = bf.readLine()) != null) {
+                    String[] strings = line.split(",");
+                    if (strings.length != 2) {
+                        continue;
+                    }
+                    items.put(strings[0], strings[1]);
+                }
+
+                for (Map.Entry<String, String> item : items.entrySet()) {
+                    FilterItem filterItem = new FilterItem(item.getKey().trim().toUpperCase(), item.getValue().trim().toUpperCase());
+                    filterItemRepos.add(filterItem);
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        } else {
+            return false;
         }
     }
 }
