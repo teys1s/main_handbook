@@ -72,6 +72,7 @@ public class AltController {
                 checkBoxes.add(manager);
                 String result = customerService.findBy(textFind, searchIndex, checkBoxes);
                 if (result==null){
+                    text.setText("");
                     return;
                 }
                 text.setText(result);
