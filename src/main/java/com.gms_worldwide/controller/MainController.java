@@ -248,6 +248,20 @@ public class MainController {
         }
     }
 
+    @FXML
+    protected void loadFilterItems(){
+        Stage stage = new Stage();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            boolean isCorrect = customerService.loadFilterItems(file);
+            if (isCorrect) {
+                setTableItems(customerService.getCustomers());
+            } else {
+                openErrorDialog();
+            }
+        }
+    }
+
     private void openErrorDialog() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("OOOOOOOOU");
