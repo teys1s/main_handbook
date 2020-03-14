@@ -1,6 +1,6 @@
 package com.gms_worldwide.repos;
 
-import com.gms_worldwide.service.FilterItem;
+import com.gms_worldwide.dto.FilterItem;
 
 import javax.persistence.TypedQuery;
 import java.util.List;

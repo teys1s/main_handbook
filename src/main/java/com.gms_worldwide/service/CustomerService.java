@@ -1,6 +1,7 @@
 package com.gms_worldwide.service;
 
 import com.gms_worldwide.dto.Customer;
+import com.gms_worldwide.dto.FilterItem;
 import com.gms_worldwide.repos.FilterItemRepos;
 import com.gms_worldwide.repos.Repos;
 import com.gms_worldwide.repos.CustomerRepos;
@@ -367,7 +368,7 @@ public class CustomerService {
                 if (result == null) {
                     result = checkCheckBox(checkBox.getId(), customer);
                 } else {
-                    result = result + "| " + checkCheckBox(checkBox.getId(), customer);
+                    result = result + "   |   " + checkCheckBox(checkBox.getId(), customer);
                 }
             }
         }

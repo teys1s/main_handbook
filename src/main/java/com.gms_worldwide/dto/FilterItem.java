@@ -1,4 +1,4 @@
-package com.gms_worldwide.service;
+package com.gms_worldwide.dto;
 
 import javax.persistence.*;
 
