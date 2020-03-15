@@ -29,27 +29,27 @@ public class MainController {
 
 
     @FXML
-    TableView<Customer> table;
+    protected TableView<Customer> table;
     @FXML
-    TableColumn<Customer, String> name;
+    protected TableColumn<Customer, String> name;
     @FXML
-    TableColumn<Customer, String> connection_name;
+    protected TableColumn<Customer, String> connection_name;
     @FXML
-    TableColumn<Customer, String> connection_type;
+    protected TableColumn<Customer, String> connection_type;
     @FXML
-    TableColumn<Customer, String> platform;
+    protected TableColumn<Customer, String> platform;
     @FXML
-    TableColumn<Customer, String> protocol;
+    protected TableColumn<Customer, String> protocol;
     @FXML
-    TableColumn<Customer, String> counterparty;
+    protected TableColumn<Customer, String> counterparty;
     @FXML
-    TableColumn<Customer, String> area;
+    protected TableColumn<Customer, String> area;
     @FXML
-    TableColumn<Customer, String> contacts;
+    protected TableColumn<Customer, String> contacts;
     @FXML
-    TableColumn<Customer, String> manager;
+    protected TableColumn<Customer, String> manager;
     @FXML
-    TextField search;
+    protected TextField search;
 
 
     @FXML
@@ -249,7 +249,7 @@ public class MainController {
     }
 
     @FXML
-    protected void loadFilterItems(){
+    protected void loadFilterItems() {
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {

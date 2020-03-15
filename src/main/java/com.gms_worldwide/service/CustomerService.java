@@ -117,6 +117,7 @@ public class CustomerService {
                 customer.getConnectionProtocol() + " " +
                 customer.getCounterpartyType() + " " +
                 customer.getPlatform() + " " +
+                customer.getContacts() + " " +
                 customer.getArea() + " " +
                 customer.getManager();
         return result;
