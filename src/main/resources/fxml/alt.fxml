@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.RadioMenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="414.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.AltController">
+<AnchorPane fx:id="sf" prefHeight="414.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.AltController">
    <children>
-      <TextArea fx:id="text" layoutX="14.0" layoutY="136.0" prefHeight="264.0" prefWidth="581.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="136.0" />
-      <SplitMenuButton fx:id="search_by" layoutX="15.0" layoutY="104.0" mnemonicParsing="false" text="Search by">
+      <SplitMenuButton fx:id="search_by" layoutX="15.0" layoutY="104.0" mnemonicParsing="false" text="Find by">
         <items>
           <RadioMenuItem fx:id="by_name" mnemonicParsing="false" text="name" />
           <RadioMenuItem fx:id="by_conn_type" mnemonicParsing="false" text="conn. type" />
@@ -31,5 +27,11 @@
       <CheckBox fx:id="area" layoutX="153.0" layoutY="67.0" mnemonicParsing="false" text="area" />
       <CheckBox fx:id="contacts" layoutX="268.0" layoutY="67.0" mnemonicParsing="false" text="contacts" />
       <CheckBox fx:id="manager" layoutX="379.0" layoutY="67.0" mnemonicParsing="false" text="manager" />
+      <TextArea fx:id="text" layoutX="14.0" layoutY="130.0" prefHeight="280.0" prefWidth="585.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="130.0" />
+      <Label layoutX="37.0" layoutY="14.0" prefHeight="17.0" prefWidth="97.0" text="Show field" textOverrun="CENTER_ELLIPSIS" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="7.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

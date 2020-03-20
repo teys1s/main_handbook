@@ -235,7 +235,8 @@ public class MainController {
 
     @FXML
     protected void loadFromFile() {
-
+        fileChooser.setTitle("Customers loading");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {

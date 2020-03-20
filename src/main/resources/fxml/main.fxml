@@ -10,7 +10,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#loadFromFile" text="Open" />
+              <MenuItem mnemonicParsing="false" onAction="#loadFromFile" text="Load customers" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -53,7 +53,6 @@
             </TableView>
          </children>
       </AnchorPane>
-       <Button mnemonicParsing="false" onAction="#loadFromFile" prefHeight="25.0" prefWidth="94.0" text="load from file" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="37.0" />
       <TextField fx:id="search" prefHeight="25.0" prefWidth="182.0" promptText="search" AnchorPane.leftAnchor="92.0" AnchorPane.topAnchor="94.0" />
        <Button mnemonicParsing="false" onAction="#openNewStage" prefHeight="27.0" prefWidth="75.0" text="Unloading " AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="92.0" />
       <Button layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#add" text="+" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="89.0">

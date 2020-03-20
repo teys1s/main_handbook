@@ -53,9 +53,10 @@ public class AltController {
     @FXML
     protected TextField findText;
 
+
     @FXML
     public void initialize() {
-        setSearching();
+        setFindingMenus();
         search_by.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -92,7 +93,7 @@ public class AltController {
     }
 
 
-    protected void setSearching() {
+    protected void setFindingMenus() {
         ToggleGroup group = new ToggleGroup();
         by_name.setToggleGroup(group);
         by_conn_type.setToggleGroup(group);
