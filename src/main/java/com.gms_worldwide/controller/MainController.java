@@ -4,9 +4,11 @@ import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.service.CustomerService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,6 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,6 +30,7 @@ public class MainController {
 
     private CustomerService customerService;
     private FileChooser fileChooser = new FileChooser();
+    private Object object;
 
 
     @FXML
@@ -56,6 +61,7 @@ public class MainController {
     public void initialize() {
         this.customerService = new CustomerService();
         setTable(customerService.getCustomers());
+        table.setEditable(true);
         search.textProperty().addListener((ov, oldV, newV) -> {
             if (!newV.trim().isEmpty()) {
                 searchCustomer(newV);
@@ -73,7 +79,6 @@ public class MainController {
 
     private void setTable(List<Customer> customers) {
         setTableItems(customerService.getCustomers());
-        table.setEditable(true);
         setCells();
         table.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
@@ -84,9 +89,7 @@ public class MainController {
             }
         });
 
-        //setRows();
-
-
+        setRows();
     }
 
     public void add() {
@@ -108,7 +111,7 @@ public class MainController {
 
     private void setCells() {
         name.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
-        name.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
+        name.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setOnEditCommit((TableColumn.CellEditEvent<Customer, String> event) -> {
             TablePosition<Customer, String> pos = event.getTablePosition();
             String newValue = event.getNewValue();
@@ -199,10 +202,12 @@ public class MainController {
         });
     }
 
+
     private void searchCustomer(String text) {
         List<Customer> customers = customerService.searchCustomer(text);
         setTableItems(customers);
     }
+
 
     private void setRows() {
         table.setRowFactory(table -> new TableRow<Customer>() {
@@ -210,16 +215,57 @@ public class MainController {
             protected void updateItem(Customer item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
-                    setStyle("-fx-background-color: TURQUOISE;\n" +
+                   /* setStyle("-fx-background-color: TURQUOISE;\n" +
                             "    -fx-background-insets: 0, 1, 2;\n" +
                             "    -fx-background: -fx-accent;\n" +
-                            "    -fx-text-fill: -fx-selection-bar-text;");
+                            "    -fx-text-fill: -fx-selection-bar-text;");*/
+                    if (item.getNote() != null) {
+                        setTooltip(new Tooltip(item.getNote()));
+                    }
+
+                   addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                       @Override
+                       public void handle(MouseEvent event) {
+                           if (event.getSource().equals(object)){
+                               return;
+                           }
+                           if(event.getButton()== MouseButton.SECONDARY){
+                               ContextMenu contextMenu = new ContextMenu();
+                               MenuItem delete = new MenuItem("Delete");
+                               delete.setOnAction(new EventHandler<ActionEvent>() {
+                                   @Override
+                                   public void handle(ActionEvent event) {
+                                       delete();
+                                   }
+                               });
+                               //delete.setText("Delete");
+                               MenuItem  note = new MenuItem("Note");
+                               note.setOnAction(new EventHandler<ActionEvent>() {
+                                   @Override
+                                   public void handle(ActionEvent event) {
+                                       try {
+                                           openNoteStage();
+                                       } catch (IOException e) {
+                                           e.printStackTrace();
+                                       }
+                                   }
+                               });
+
+                               contextMenu.getItems().add(delete);
+                               contextMenu.getItems().add(note);
+
+                               contextMenu.show((Node) event.getSource(), event.getScreenX(),event.getScreenY());
+                               object = event.getSource();
+
+                           }
+                       }
+                   });
                 }
             }
         });
     }
 
-    public void openNewStage() throws IOException {
+    public void openUnloadingStage() throws IOException {
         Stage stage = new Stage();
         String fxmlFile = "/fxml/alt.fxml";
         FXMLLoader loader = new FXMLLoader();
@@ -280,6 +326,27 @@ public class MainController {
         alert.setContentText("\n\n\n Copyright © 2020 GMSU. All rights reserved.");
 
         alert.showAndWait();
+
+    }
+
+    @FXML
+    protected void openNoteStage() throws IOException {
+        Stage stage = new Stage();
+        String fxmlFile = "/fxml/note.fxml";
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setScene(new Scene(root));
+        NoteController noteController = loader.getController();
+        noteController.setService(customerService);
+        int row = table.getSelectionModel().getFocusedIndex();
+        Customer customer = table.getItems().get(row);
+        noteController.setCurrentCustomer(customer);
+        noteController.initData();
+        stage.setTitle("Note - " + customer.getConnectionName());
+        stage.show();
+
 
     }
 

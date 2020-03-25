@@ -2,13 +2,17 @@ package com.gms_worldwide.service;
 
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.dto.FilterItem;
+import com.gms_worldwide.repos.CustomerRepos;
 import com.gms_worldwide.repos.FilterItemRepos;
 import com.gms_worldwide.repos.Repos;
-import com.gms_worldwide.repos.CustomerRepos;
 import javafx.scene.control.CheckBox;
 
 import java.io.*;
-import java.util.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CustomerService {
 
@@ -479,6 +483,17 @@ public class CustomerService {
 
             return true;
         } else {
+            return false;
+        }
+    }
+
+    public boolean noteSaved(Customer currentCustomer) {
+
+        try {
+            update(currentCustomer);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

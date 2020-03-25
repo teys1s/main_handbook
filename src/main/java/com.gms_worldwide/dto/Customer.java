@@ -19,6 +19,7 @@ public class Customer {
     private String area;
     private String contacts;
     private String manager;
+    private String note;
 
 
     public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, String contacts, String manager) {
@@ -40,6 +41,17 @@ public class Customer {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public String getName() {
         return name;
