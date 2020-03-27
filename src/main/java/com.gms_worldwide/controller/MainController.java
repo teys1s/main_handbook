@@ -219,9 +219,7 @@ public class MainController {
                             "    -fx-background-insets: 0, 1, 2;\n" +
                             "    -fx-background: -fx-accent;\n" +
                             "    -fx-text-fill: -fx-selection-bar-text;");*/
-                    if (item.getNote() != null) {
-                        setTooltip(new Tooltip(item.getNote()));
-                    }
+                    setTooltip(new Tooltip(item.getNote()));
 
                    addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                        @Override

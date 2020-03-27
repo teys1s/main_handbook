@@ -44,6 +44,9 @@ public class NoteController {
         }
         noteText.textProperty().addListener((ov, oldNote, newNote) -> {
             String noteFromDB = currentCustomer.getNote();
+            if (noteFromDB == null) {
+                noteFromDB = "";
+            }
             if (!noteFromDB.equals(newNote)) {
                 saveBtn.setDisable(false);
             } else {
