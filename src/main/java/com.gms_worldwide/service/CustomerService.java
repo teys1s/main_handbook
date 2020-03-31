@@ -5,17 +5,18 @@ import com.gms_worldwide.dto.FilterItem;
 import com.gms_worldwide.repos.CustomerRepos;
 import com.gms_worldwide.repos.FilterItemRepos;
 import com.gms_worldwide.repos.Repos;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class CustomerService {
 
+    private ObservableList<Customer> observableList;
     private List<Customer> customers;
     private CustomerRepos customerRepos;
     private FilterItemRepos filterItemRepos;
@@ -24,6 +25,7 @@ public class CustomerService {
     public CustomerService() {
         this.customerRepos = new CustomerRepos();
         this.customers = getAllCustomers();
+        observableList = FXCollections.observableArrayList(customers);
         this.filterItemRepos = new FilterItemRepos();
         fillSearchFilter();
 
@@ -49,9 +51,18 @@ public class CustomerService {
         this.customers = customers;
     }
 
+    public ObservableList<Customer> getObservableList() {
+        return observableList;
+    }
+
+    public void setObservableList(ObservableList<Customer> observableList) {
+        this.observableList = observableList;
+    }
+
     public void add(Customer customer) {
         this.customerRepos.add(customer);
         this.customers.add(customer);
+        this.observableList.add(customer);
     }
 
     private List<Customer> getAllCustomers() {
@@ -59,20 +70,6 @@ public class CustomerService {
     }
 
     private void fillSearchFilter() {
-
-        /*searchFilter.put("СКАРПЕЛ", "SCARPEL");
-        searchFilter.put("СКАРПЭЛ", "SCARPEL");
-        searchFilter.put("КЛІЄНТ", "CLIENT");
-        searchFilter.put("КЛИЕНТ", "CLIENT");
-        searchFilter.put("КИЇВ", "KYIV");
-        searchFilter.put("KIEV", "KYIV");
-        searchFilter.put("КИЕВ", "KYIV");
-        searchFilter.put("KYIV", "KYIV");
-        searchFilter.put("КОМПАТЕЛ", "COMPATEL");
-        searchFilter.put("КОМПАТЭЛ", "COMPATEL");
-        searchFilter.put("ИНКОМИНГ", "INCOMING");
-        searchFilter.put("ІНКОМІНГ", "INCOMING");*/
-
         List<FilterItem> filterItems = filterItemRepos.getFilterTypes();
         for (FilterItem filterType : filterItems) {
             searchFilter.put(filterType.getSearchIn(), filterType.getSearchOut());
@@ -91,17 +88,24 @@ public class CustomerService {
 
     public void delete(Customer customer) {
         customerRepos.delete(customer);
+        observableList.remove(customer);
         customers.remove(customer);
     }
 
     public void update(Customer customer) {
         customerRepos.update(customer);
-
+        customers.remove(customer);
+        customers.add(customer);
+        observableList.remove(customer);
+        observableList.add(customer);
     }
 
-    public List<Customer> searchCustomer(String text) {
+    public void searchCustomer(String text) {
         List<Customer> foundCustomers = new ArrayList<>();
-
+        if (text.trim().isEmpty()) {
+            observableList = FXCollections.observableArrayList(customers);
+            return;
+        }
         for (Customer customer : customers) {
             String customerText = toText(customer);
             customerText = customerText.replaceAll("null", "");
@@ -110,7 +114,7 @@ public class CustomerService {
                 foundCustomers.add(customer);
             }
         }
-        return foundCustomers;
+        observableList = FXCollections.observableArrayList(foundCustomers);
     }
 
     private String toText(Customer customer) {

@@ -31,6 +31,7 @@ public class MainController {
     private CustomerService customerService;
     private FileChooser fileChooser = new FileChooser();
     private Object object;
+    private ContextMenu contextMenu;
 
 
     @FXML
@@ -60,25 +61,24 @@ public class MainController {
     @FXML
     public void initialize() {
         this.customerService = new CustomerService();
+        contextMenu = new ContextMenu();
+        setContextMenu();
+
         setTable(customerService.getCustomers());
         table.setEditable(true);
         search.textProperty().addListener((ov, oldV, newV) -> {
-            if (!newV.trim().isEmpty()) {
-                searchCustomer(newV);
-            } else {
-                setTableItems(customerService.getCustomers());
-            }
+            searchCustomer(newV);
         });
 
     }
 
-    private void setTableItems(List<Customer> customers) {
-        ObservableList<Customer> observedCustomers = FXCollections.observableArrayList(customers);
+    private void setTableItems() {
+        ObservableList<Customer> observedCustomers = customerService.getObservableList();
         table.setItems(observedCustomers);
     }
 
     private void setTable(List<Customer> customers) {
-        setTableItems(customerService.getCustomers());
+        setTableItems();
         setCells();
         table.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
@@ -95,7 +95,7 @@ public class MainController {
     public void add() {
         Customer customer = new Customer();
         customerService.add(customer);
-        setTableItems(customerService.getCustomers());
+        setTableItems();
     }
 
     public void update(Customer customer) {
@@ -106,7 +106,7 @@ public class MainController {
         int row = table.getSelectionModel().getFocusedIndex();
         Customer customer = table.getItems().get(row);
         customerService.delete(customer);
-        setTableItems(customerService.getCustomers());
+        setTableItems();
     }
 
     private void setCells() {
@@ -204,10 +204,33 @@ public class MainController {
 
 
     private void searchCustomer(String text) {
-        List<Customer> customers = customerService.searchCustomer(text);
-        setTableItems(customers);
+        customerService.searchCustomer(text);
+        setTableItems();
     }
 
+    private void setContextMenu() {
+        MenuItem delete = new MenuItem("Delete");
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                delete();
+            }
+        });
+        //delete.setText("Delete");
+        MenuItem note = new MenuItem("Note");
+        note.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    openNoteStage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        contextMenu.getItems().add(delete);
+        contextMenu.getItems().add(note);
+    }
 
     private void setRows() {
         table.setRowFactory(table -> new TableRow<Customer>() {
@@ -221,43 +244,19 @@ public class MainController {
                             "    -fx-text-fill: -fx-selection-bar-text;");*/
                     setTooltip(new Tooltip(item.getNote()));
 
-                   addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                       @Override
-                       public void handle(MouseEvent event) {
-                           if (event.getSource().equals(object)){
-                               return;
-                           }
-                           if(event.getButton()== MouseButton.SECONDARY){
-                               ContextMenu contextMenu = new ContextMenu();
-                               MenuItem delete = new MenuItem("Delete");
-                               delete.setOnAction(new EventHandler<ActionEvent>() {
-                                   @Override
-                                   public void handle(ActionEvent event) {
-                                       delete();
-                                   }
-                               });
-                               //delete.setText("Delete");
-                               MenuItem  note = new MenuItem("Note");
-                               note.setOnAction(new EventHandler<ActionEvent>() {
-                                   @Override
-                                   public void handle(ActionEvent event) {
-                                       try {
-                                           openNoteStage();
-                                       } catch (IOException e) {
-                                           e.printStackTrace();
-                                       }
-                                   }
-                               });
+                    addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (contextMenu.isShowing()) {
+                                contextMenu.hide();
+                            }
+                            if (event.getButton() == MouseButton.SECONDARY) {
+                                contextMenu.show((Node) event.getSource(), event.getScreenX(), event.getScreenY());
+                                object = event.getSource();
 
-                               contextMenu.getItems().add(delete);
-                               contextMenu.getItems().add(note);
-
-                               contextMenu.show((Node) event.getSource(), event.getScreenX(),event.getScreenY());
-                               object = event.getSource();
-
-                           }
-                       }
-                   });
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -286,7 +285,7 @@ public class MainController {
         if (file != null) {
             boolean isCorrect = customerService.addCustomersFromFile(file.getAbsoluteFile());
             if (isCorrect) {
-                setTableItems(customerService.getCustomers());
+                setTableItems();
             } else {
                 openErrorDialog();
             }
@@ -300,7 +299,7 @@ public class MainController {
         if (file != null) {
             boolean isCorrect = customerService.loadFilterItems(file);
             if (isCorrect) {
-                setTableItems(customerService.getCustomers());
+                setTableItems();
             } else {
                 openErrorDialog();
             }
@@ -344,8 +343,6 @@ public class MainController {
         noteController.initData();
         stage.setTitle("Note - " + customer.getConnectionName());
         stage.show();
-
-
     }
 
 }

@@ -2,6 +2,7 @@ package com.gms_worldwide.dto;
 
 
 import javax.persistence.*;
+import java.util.Observable;
 
 @Entity
 @Table(name = "customer")
@@ -162,7 +163,8 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", connectionName='" + connectionName + '\'' +
                 ", connectionType='" + connectionType + '\'' +
                 ", platform='" + platform + '\'' +
@@ -171,6 +173,7 @@ public class Customer {
                 ", area='" + area + '\'' +
                 ", contacts='" + contacts + '\'' +
                 ", manager='" + manager + '\'' +
+                ", note='" + note + '\'' +
                 '}';
     }
 }
