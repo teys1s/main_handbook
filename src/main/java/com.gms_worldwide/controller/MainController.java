@@ -341,7 +341,7 @@ public class MainController {
         Customer customer = table.getItems().get(row);
         noteController.setCurrentCustomer(customer);
         noteController.initData();
-        stage.setTitle("Note - " + customer.getConnectionName());
+        stage.setTitle("Note: " + customer.getName() + " " + customer.getConnectionName());
         stage.show();
     }
 

@@ -1,7 +1,9 @@
 package com.gms_worldwide.service;
 
 import com.gms_worldwide.dto.Customer;
+import com.gms_worldwide.dto.CustomerNote;
 import com.gms_worldwide.dto.FilterItem;
+import com.gms_worldwide.repos.CustomerNoteRepos;
 import com.gms_worldwide.repos.CustomerRepos;
 import com.gms_worldwide.repos.FilterItemRepos;
 import com.gms_worldwide.repos.Repos;
@@ -20,6 +22,7 @@ public class CustomerService {
     private List<Customer> customers;
     private CustomerRepos customerRepos;
     private FilterItemRepos filterItemRepos;
+    private CustomerNoteRepos customerNoteRepos;
     private Map<String, String> searchFilter = new HashMap<>();
 
     public CustomerService() {
@@ -27,6 +30,7 @@ public class CustomerService {
         this.customers = getAllCustomers();
         observableList = FXCollections.observableArrayList(customers);
         this.filterItemRepos = new FilterItemRepos();
+        this.customerNoteRepos = new CustomerNoteRepos();
         fillSearchFilter();
 
         /*for (Map.Entry<String, String> item : searchFilter.entrySet()) {
@@ -60,9 +64,21 @@ public class CustomerService {
     }
 
     public void add(Customer customer) {
+        if (customer.getName() != null) {
+            customer = setCustomerNote(customer);
+        }
+        System.out.println(customer.getName());
         this.customerRepos.add(customer);
         this.customers.add(customer);
         this.observableList.add(customer);
+    }
+
+    private void addCustomerNote(CustomerNote customerNote) {
+        this.customerNoteRepos.add(customerNote);
+    }
+
+    private List<CustomerNote> getCustomerNotes() {
+        return customerNoteRepos.getAllCustomers();
     }
 
     private List<Customer> getAllCustomers() {
@@ -93,11 +109,18 @@ public class CustomerService {
     }
 
     public void update(Customer customer) {
+        if (customer.getName() != null) {
+            customer = setCustomerNote(customer);
+        }
         customerRepos.update(customer);
         customers.remove(customer);
         customers.add(customer);
         observableList.remove(customer);
         observableList.add(customer);
+    }
+
+    private void updateCustomerNote(CustomerNote customerNote) {
+        customerNoteRepos.update(customerNote);
     }
 
     public void searchCustomer(String text) {
@@ -491,7 +514,7 @@ public class CustomerService {
         }
     }
 
-    public boolean noteSaved(Customer currentCustomer) {
+    public boolean connectionNoteSaved(Customer currentCustomer) {
 
         try {
             update(currentCustomer);
@@ -500,5 +523,55 @@ public class CustomerService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean customerNoteSaved(CustomerNote customerNote) {
+        try {
+            updateCustomerNote(customerNote);
+            updateCustomerNoteInLists(customerNote);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void updateCustomerNoteInLists(CustomerNote customerNote) {
+        for (Customer customer : customers) {
+            if (customer.getName().trim().toUpperCase().equals(customerNote.getCustomerName().trim().toUpperCase())) {
+                customer.getCustomerNote().setNote(customerNote.getNote());
+            }
+        }
+        for (Customer customer : observableList) {
+            if (customer.getName().trim().toUpperCase().equals(customerNote.getCustomerName().trim().toUpperCase())) {
+                customer.getCustomerNote().setNote(customerNote.getNote());
+            }
+        }
+    }
+
+    private Customer setCustomerNote(Customer customer) {
+        List<CustomerNote> customerNotes = getCustomerNotes();
+        if (customerNotes.size() != 0) {
+            boolean isCustomerNoteExist = false;
+            for (CustomerNote customerNote : customerNotes) {
+                if (customerNote.getCustomerName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
+                    customer.setCustomerNote(customerNote);
+                    isCustomerNoteExist = true;
+                    break;
+                }
+            }
+            if (isCustomerNoteExist == false) {
+                CustomerNote customerNote = new CustomerNote();
+                customerNote.setCustomerName(customer.getName());
+                customer.setCustomerNote(customerNote);
+                addCustomerNote(customerNote);
+            }
+        } else {
+            CustomerNote customerNote = new CustomerNote();
+            customerNote.setCustomerName(customer.getName());
+            customer.setCustomerNote(customerNote);
+            addCustomerNote(customerNote);
+        }
+        return customer;
     }
 }

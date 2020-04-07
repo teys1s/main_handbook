@@ -2,7 +2,6 @@ package com.gms_worldwide.dto;
 
 
 import javax.persistence.*;
-import java.util.Observable;
 
 @Entity
 @Table(name = "customer")
@@ -21,6 +20,8 @@ public class Customer {
     private String contacts;
     private String manager;
     private String note;
+    @ManyToOne
+    private CustomerNote customerNote;
 
 
     public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, String contacts, String manager) {
@@ -124,6 +125,14 @@ public class Customer {
 
     public void setManager(String manager) {
         this.manager = manager;
+    }
+
+    public CustomerNote getCustomerNote() {
+        return customerNote;
+    }
+
+    public void setCustomerNote(CustomerNote customerNote) {
+        this.customerNote = customerNote;
     }
 
     @Override

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.NoteController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gms_worldwide.controller.NoteController">
    <children>
-      <TextArea fx:id="noteText" layoutX="6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="saveBtn" layoutX="33.0" layoutY="361.0" mnemonicParsing="false" onAction="#saveNote" text="Save" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="33.0" />
+      <TextArea fx:id="customerNote" layoutX="6.0" layoutY="161.0" prefHeight="189.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="160.0" />
+      <Button fx:id="saveBtnCustomer" layoutX="33.0" layoutY="361.0" mnemonicParsing="false" onAction="#saveCustomerNote" text="Save" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="33.0" />
+      <Button fx:id="saveBtnConnection" layoutX="7.0" layoutY="120.0" mnemonicParsing="false" onAction="#saveConnectionNote" text="Save" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="120.0" />
+      <TextArea fx:id="connectionNote" layoutX="1.0" layoutY="-2.0" prefHeight="113.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

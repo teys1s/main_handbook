@@ -1,6 +1,7 @@
 package com.gms_worldwide.controller;
 
 import com.gms_worldwide.dto.Customer;
+import com.gms_worldwide.dto.CustomerNote;
 import com.gms_worldwide.service.CustomerService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,14 +13,18 @@ public class NoteController {
     private Customer currentCustomer;
 
     @FXML
-    protected TextArea noteText;
+    protected TextArea connectionNote;
     @FXML
-    protected Button saveBtn;
+    protected TextArea customerNote;
+    @FXML
+    protected Button saveBtnConnection;
+    @FXML
+    protected Button saveBtnCustomer;
 
     @FXML
     public void initialize() {
-        saveBtn.setDisable(true);
-
+        saveBtnConnection.setDisable(true);
+        saveBtnCustomer.setDisable(true);
     }
 
     public CustomerService getService() {
@@ -40,26 +45,53 @@ public class NoteController {
 
     public void initData() {
         if (currentCustomer.getNote() != null) {
-            noteText.setText(currentCustomer.getNote());
+            connectionNote.setText(currentCustomer.getNote());
         }
-        noteText.textProperty().addListener((ov, oldNote, newNote) -> {
+
+        if (currentCustomer.getCustomerNote().getNote() != null) {
+            customerNote.setText(currentCustomer.getCustomerNote().getNote());
+        }
+
+        connectionNote.textProperty().addListener((ov, oldNote, newNote) -> {
             String noteFromDB = currentCustomer.getNote();
             if (noteFromDB == null) {
                 noteFromDB = "";
             }
             if (!noteFromDB.equals(newNote)) {
-                saveBtn.setDisable(false);
+                saveBtnConnection.setDisable(false);
             } else {
-                saveBtn.setDisable(true);
+                saveBtnConnection.setDisable(true);
             }
         });
+
+        customerNote.textProperty().addListener((ov, oldNote, newNote) -> {
+            String noteFromDB = currentCustomer.getCustomerNote().getNote();
+            if (noteFromDB == null) {
+                noteFromDB = "";
+            }
+            if (!noteFromDB.equals(newNote)) {
+                saveBtnCustomer.setDisable(false);
+            } else {
+                saveBtnCustomer.setDisable(true);
+            }
+        });
+
     }
 
     @FXML
-    protected void saveNote() {
-        currentCustomer.setNote(noteText.getText());
-        if (service.noteSaved(currentCustomer)) {
-            saveBtn.setDisable(true);
+    protected void saveConnectionNote() {
+        currentCustomer.setNote(connectionNote.getText());
+        if (service.connectionNoteSaved(currentCustomer)) {
+            saveBtnConnection.setDisable(true);
+        }
+    }
+
+    @FXML
+    protected void saveCustomerNote() {
+        CustomerNote customersNote = currentCustomer.getCustomerNote();
+        customersNote.setNote(customerNote.getText());
+        if (service.customerNoteSaved(customersNote)) {
+            saveBtnCustomer.setDisable(true);
         }
     }
 }
