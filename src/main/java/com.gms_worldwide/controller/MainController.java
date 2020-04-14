@@ -98,8 +98,9 @@ public class MainController {
         setTableItems();
     }
 
-    public void update(Customer customer) {
-        customerService.update(customer);
+    public void update(Customer customer, boolean isNameChanged, boolean isContactsOrManagerChanged) {
+        customerService.update(customer, isNameChanged, isContactsOrManagerChanged);
+        //setTableItems();
     }
 
     public void delete() {
@@ -118,7 +119,8 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setName(newValue);
-            update(customer);
+            update(customer, true, false);
+            customerService.getObservableList().forEach(c -> System.out.println(c));
         });
         connection_name.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionName"));
         connection_name.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -128,7 +130,7 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setConnectionName(newValue);
-            update(customer);
+            update(customer, false, false);
         });
         connection_type.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionType"));
         connection_type.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -138,7 +140,7 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setConnectionType(newValue);
-            update(customer);
+            update(customer, false, false);
         });
         platform.setCellValueFactory(new PropertyValueFactory<Customer, String>("platform"));
         platform.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -148,7 +150,7 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setPlatform(newValue);
-            update(customer);
+            update(customer, false, false);
         });
         protocol.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionProtocol"));
         protocol.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -158,7 +160,7 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setConnectionProtocol(newValue);
-            update(customer);
+            update(customer, false, false);
         });
         counterparty.setCellValueFactory(new PropertyValueFactory<Customer, String>("counterpartyType"));
         counterparty.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -168,7 +170,7 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setCounterpartyType(newValue);
-            update(customer);
+            update(customer, false, false);
         });
         area.setCellValueFactory(new PropertyValueFactory<Customer, String>("area"));
         area.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -178,7 +180,7 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setArea(newValue);
-            update(customer);
+            update(customer, false, false);
         });
         manager.setCellValueFactory(new PropertyValueFactory<Customer, String>("manager"));
         manager.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -188,7 +190,8 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setManager(newValue);
-            update(customer);
+            update(customer, false, true);
+            customerService.getObservableList().forEach(c -> System.out.println(c));
         });
         contacts.setCellValueFactory(new PropertyValueFactory<Customer, String>("contacts"));
         contacts.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -198,7 +201,8 @@ public class MainController {
             int row = pos.getRow();
             Customer customer = event.getTableView().getItems().get(row);
             customer.setContacts(newValue);
-            update(customer);
+            update(customer, false, true);
+            customerService.getObservableList().forEach(c -> System.out.println(c));
         });
     }
 
@@ -284,6 +288,22 @@ public class MainController {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             boolean isCorrect = customerService.addCustomersFromFile(file.getAbsoluteFile());
+            if (isCorrect) {
+                setTableItems();
+            } else {
+                openErrorDialog();
+            }
+        }
+    }
+
+    @FXML
+    protected void loadFromFileWithAutoFilling() {
+        fileChooser.setTitle("Customers loading");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
+        Stage stage = new Stage();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            boolean isCorrect = customerService.addCustomersFromFileAutoFilling(file.getAbsoluteFile());
             if (isCorrect) {
                 setTableItems();
             } else {

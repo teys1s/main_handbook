@@ -65,9 +65,8 @@ public class CustomerService {
 
     public void add(Customer customer) {
         if (customer.getName() != null) {
-            customer = setCustomerNote(customer);
+            customer.setCustomerNote(setCustomerNote(customer));
         }
-        System.out.println(customer.getName());
         this.customerRepos.add(customer);
         this.customers.add(customer);
         this.observableList.add(customer);
@@ -108,15 +107,20 @@ public class CustomerService {
         customers.remove(customer);
     }
 
-    public void update(Customer customer) {
-        if (customer.getName() != null) {
-            customer = setCustomerNote(customer);
+    public void update(Customer customer, boolean isNameChanged, boolean isContactsOrManagerChanged) {
+        if (customer.getName() != null && isNameChanged) {
+            customer.setCustomerNote(setCustomerNote(customer));
+            customer = setManagerAndContacts(customer);
+        }
+
+        if (customer.getName() != null && isContactsOrManagerChanged) {
+            updateManagersAndContacts(customer);
         }
         customerRepos.update(customer);
         customers.remove(customer);
         customers.add(customer);
-        observableList.remove(customer);
-        observableList.add(customer);
+        observableList.removeAll(observableList);
+        observableList.addAll(customers);
     }
 
     private void updateCustomerNote(CustomerNote customerNote) {
@@ -475,6 +479,27 @@ public class CustomerService {
         return customers;
     }
 
+    private List<Customer> customerParseAutoFilling(List<String> strings) {
+        List<Customer> customers = new ArrayList<>();
+        for (String string : strings) {
+            String[] fields = string.split("\\|");
+            if (fields.length < 7) {
+                continue;
+            }
+            Customer customer = new Customer();
+            customer.setName(fields[0]);
+            customer.setConnectionName(fields[1]);
+            customer.setConnectionType(fields[2]);
+            customer.setPlatform(fields[3]);
+            customer.setConnectionProtocol(fields[4]);
+            customer.setCounterpartyType(fields[5]);
+            customer.setArea(fields[6]);
+            customer = setManagerAndContacts(customer);
+            customers.add(customer);
+        }
+        return customers;
+    }
+
     private void addAll(List<Customer> customers) {
         for (Customer customer : customers) {
             add(customer);
@@ -517,7 +542,7 @@ public class CustomerService {
     public boolean connectionNoteSaved(Customer currentCustomer) {
 
         try {
-            update(currentCustomer);
+            update(currentCustomer, false, false);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -549,29 +574,75 @@ public class CustomerService {
         }
     }
 
-    private Customer setCustomerNote(Customer customer) {
+    private CustomerNote setCustomerNote(Customer customer) {
         List<CustomerNote> customerNotes = getCustomerNotes();
+        CustomerNote customerNoteR = null;
         if (customerNotes.size() != 0) {
             boolean isCustomerNoteExist = false;
             for (CustomerNote customerNote : customerNotes) {
                 if (customerNote.getCustomerName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
                     customer.setCustomerNote(customerNote);
-                    isCustomerNoteExist = true;
-                    break;
+                    return customerNote;
                 }
             }
-            if (isCustomerNoteExist == false) {
-                CustomerNote customerNote = new CustomerNote();
-                customerNote.setCustomerName(customer.getName());
-                customer.setCustomerNote(customerNote);
-                addCustomerNote(customerNote);
+            if (!isCustomerNoteExist) {
+                customerNoteR = new CustomerNote();
+                customerNoteR.setCustomerName(customer.getName());
+                addCustomerNote(customerNoteR);
             }
         } else {
-            CustomerNote customerNote = new CustomerNote();
-            customerNote.setCustomerName(customer.getName());
-            customer.setCustomerNote(customerNote);
-            addCustomerNote(customerNote);
+            customerNoteR = new CustomerNote();
+            customerNoteR.setCustomerName(customer.getName());
+            addCustomerNote(customerNoteR);
+        }
+        return customerNoteR;
+    }
+
+    private Customer setManagerAndContacts(Customer customer) {
+        for (Customer customer1 : customers) {
+            if (customer1.getName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
+                customer.setContacts(customer1.getContacts());
+                customer.setManager(customer1.getManager());
+                break;
+            }
         }
         return customer;
+    }
+
+    private void updateManagersAndContacts(Customer customer) {
+        for (Customer customer1 : customers) {
+            if (customer1.getName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
+                customer1.setManager(customer.getManager());
+                customer1.setContacts(customer.getContacts());
+            }
+        }
+
+        observableList.removeAll(observableList);
+        observableList.addAll(customers);
+    }
+
+    public boolean addCustomersFromFileAutoFilling(File absoluteFile) {
+        List<String> strings = new ArrayList<>();
+        List<Customer> newCustomers;
+        if (absoluteFile.toString().endsWith(".txt")) {
+
+            try (BufferedReader bf = new BufferedReader(new FileReader(absoluteFile))) {
+
+                String line;
+                while ((line = bf.readLine()) != null) {
+                    strings.add(line);
+                }
+                newCustomers = customerParseAutoFilling(strings);
+                addAll(newCustomers);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }
