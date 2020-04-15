@@ -12,14 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class CustomerService {
 
     private ObservableList<Customer> observableList;
-    private List<Customer> customers;
+    private Set<Customer> customers;
     private CustomerRepos customerRepos;
     private FilterItemRepos filterItemRepos;
     private CustomerNoteRepos customerNoteRepos;
@@ -33,10 +31,6 @@ public class CustomerService {
         this.customerNoteRepos = new CustomerNoteRepos();
         fillSearchFilter();
 
-        /*for (Map.Entry<String, String> item : searchFilter.entrySet()) {
-            FilterItem filterItem = new FilterItem(item.getKey().trim().toUpperCase(), item.getValue().trim().toUpperCase());
-            filterItemRepos.add(filterItem);
-        }*/
     }
 
     public Repos getCustomerRepos() {
@@ -47,11 +41,11 @@ public class CustomerService {
         this.customerRepos = customerRepos;
     }
 
-    public List<Customer> getCustomers() {
+    public Set<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(List<Customer> customers) {
+    public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
     }
 
@@ -80,8 +74,9 @@ public class CustomerService {
         return customerNoteRepos.getAllCustomers();
     }
 
-    private List<Customer> getAllCustomers() {
-        return customerRepos.getAllCustomers();
+    private Set<Customer> getAllCustomers() {
+        List<Customer> customers = customerRepos.getAllCustomers();
+        return new HashSet<>(customers);
     }
 
     private void fillSearchFilter() {
@@ -282,6 +277,22 @@ public class CustomerService {
             }
         }
 
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
+            }
+        }
+
+        System.out.println("result: " + result);
+
         return result;
     }
 
@@ -297,6 +308,20 @@ public class CustomerService {
                 } else {
                     result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
                 }
+            }
+        }
+
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
             }
         }
 
@@ -318,6 +343,20 @@ public class CustomerService {
             }
         }
 
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
+            }
+        }
+
         return result;
     }
 
@@ -333,6 +372,20 @@ public class CustomerService {
                 } else {
                     result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
                 }
+            }
+        }
+
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
             }
         }
 
@@ -354,6 +407,20 @@ public class CustomerService {
             }
         }
 
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
+            }
+        }
+
         return result;
     }
 
@@ -372,6 +439,20 @@ public class CustomerService {
             }
         }
 
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
+            }
+        }
+
         return result;
     }
 
@@ -387,6 +468,20 @@ public class CustomerService {
                 } else {
                     result = result + "\n" + makeStringFromCustomer(customer, checkBoxes);
                 }
+            }
+        }
+
+        if (isOnlyOneSelected(checkBoxes, "manager") || isOnlyOneSelected(checkBoxes, "contacts")) {
+            String[] strings = result.split("\n");
+
+            Set<String> stringSet = new HashSet<>();
+            for (String string : strings) {
+                stringSet.add(string.trim());
+            }
+            System.out.println(stringSet);
+            result = "";
+            for (String s : stringSet) {
+                result = result.concat(s + "\n");
             }
         }
 
@@ -410,6 +505,24 @@ public class CustomerService {
         }
 
         return result;
+    }
+
+    private boolean isOnlyOneSelected(List<CheckBox> checkBoxes, String checkName) {
+        int count = 0;
+        boolean isItSelected = false;
+        for (CheckBox checkBox : checkBoxes) {
+            if (checkBox.isSelected()) {
+                if (checkBox.getId().equals(checkName)) {
+                    isItSelected = true;
+                }
+                count++;
+            }
+        }
+
+        if (count == 1 && isItSelected) {
+            return true;
+        }
+        return false;
     }
 
     private String checkCheckBox(String id, Customer customer) {

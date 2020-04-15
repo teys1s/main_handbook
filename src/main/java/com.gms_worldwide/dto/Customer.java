@@ -142,31 +142,12 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (id != customer.id) return false;
-        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
-        if (connectionName != null ? !connectionName.equals(customer.connectionName) : customer.connectionName != null) return false;
-        if (connectionType != null ? !connectionType.equals(customer.connectionType) : customer.connectionType != null) return false;
-        if (platform != null ? !platform.equals(customer.platform) : customer.platform != null) return false;
-        if (connectionProtocol != null ? !connectionProtocol.equals(customer.connectionProtocol) : customer.connectionProtocol != null) return false;
-        if (counterpartyType != null ? !counterpartyType.equals(customer.counterpartyType) : customer.counterpartyType != null) return false;
-        if (area != null ? !area.equals(customer.area) : customer.area != null) return false;
-        if (contacts != null ? !contacts.equals(customer.contacts) : customer.contacts != null) return false;
-        return manager != null ? manager.equals(customer.manager) : customer.manager == null;
+        return id == customer.id;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (connectionName != null ? connectionName.hashCode() : 0);
-        result = 31 * result + (connectionType != null ? connectionType.hashCode() : 0);
-        result = 31 * result + (platform != null ? platform.hashCode() : 0);
-        result = 31 * result + (connectionProtocol != null ? connectionProtocol.hashCode() : 0);
-        result = 31 * result + (counterpartyType != null ? counterpartyType.hashCode() : 0);
-        result = 31 * result + (area != null ? area.hashCode() : 0);
-        result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
-        result = 31 * result + (manager != null ? manager.hashCode() : 0);
-        return result;
+        return (int) (id ^ (id >>> 32));
     }
 
     @Override

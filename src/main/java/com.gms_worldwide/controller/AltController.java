@@ -72,7 +72,8 @@ public class AltController {
                 checkBoxes.add(contacts);
                 checkBoxes.add(manager);
                 String result = customerService.findBy(textFind, searchIndex, checkBoxes);
-                if (result==null){
+                System.out.println("alt result: " + result);
+                if (result == null) {
                     text.setText("");
                     return;
                 }

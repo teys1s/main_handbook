@@ -64,7 +64,7 @@ public class MainController {
         contextMenu = new ContextMenu();
         setContextMenu();
 
-        setTable(customerService.getCustomers());
+        setTable();
         table.setEditable(true);
         search.textProperty().addListener((ov, oldV, newV) -> {
             searchCustomer(newV);
@@ -77,7 +77,7 @@ public class MainController {
         table.setItems(observedCustomers);
     }
 
-    private void setTable(List<Customer> customers) {
+    private void setTable() {
         setTableItems();
         setCells();
         table.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
