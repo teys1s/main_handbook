@@ -120,7 +120,6 @@ public class MainController {
             Customer customer = event.getTableView().getItems().get(row);
             customer.setName(newValue);
             update(customer, true, false);
-            customerService.getObservableList().forEach(c -> System.out.println(c));
         });
         connection_name.setCellValueFactory(new PropertyValueFactory<Customer, String>("connectionName"));
         connection_name.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -191,7 +190,6 @@ public class MainController {
             Customer customer = event.getTableView().getItems().get(row);
             customer.setManager(newValue);
             update(customer, false, true);
-            customerService.getObservableList().forEach(c -> System.out.println(c));
         });
         contacts.setCellValueFactory(new PropertyValueFactory<Customer, String>("contacts"));
         contacts.setCellFactory(TextFieldTableCell.<Customer>forTableColumn());
@@ -202,7 +200,6 @@ public class MainController {
             Customer customer = event.getTableView().getItems().get(row);
             customer.setContacts(newValue);
             update(customer, false, true);
-            customerService.getObservableList().forEach(c -> System.out.println(c));
         });
     }
 

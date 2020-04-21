@@ -2,6 +2,7 @@ package com.gms_worldwide.dto;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer")
@@ -22,6 +23,7 @@ public class Customer {
     private String note;
     @ManyToOne
     private CustomerNote customerNote;
+    private LocalDateTime createTime;
 
 
     public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, String contacts, String manager) {
@@ -133,6 +135,14 @@ public class Customer {
 
     public void setCustomerNote(CustomerNote customerNote) {
         this.customerNote = customerNote;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
     @Override

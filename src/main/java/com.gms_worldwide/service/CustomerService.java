@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class CustomerService {
@@ -22,15 +23,45 @@ public class CustomerService {
     private FilterItemRepos filterItemRepos;
     private CustomerNoteRepos customerNoteRepos;
     private Map<String, String> searchFilter = new HashMap<>();
+    private static Comparator<Customer> BY_CREATE_TIME;
+    private static Comparator<Customer> BY_ID;
+
+    static {
+        BY_CREATE_TIME = new Comparator<Customer>() {
+            @Override
+            public int compare(Customer o1, Customer o2) {
+                return o2.getCreateTime().getSecond() - o1.getCreateTime().getSecond();
+            }
+        };
+    }
+
+    static {
+        BY_ID = new Comparator<Customer>() {
+            @Override
+            public int compare(Customer o1, Customer o2) {
+                return (int) (o2.getId() - o1.getId());
+            }
+        };
+    }
 
     public CustomerService() {
         this.customerRepos = new CustomerRepos();
-        this.customers = getAllCustomers();
+        this.customers = new TreeSet<>(BY_CREATE_TIME.thenComparing(BY_ID));
+        fillTreeSetCustomers();
         observableList = FXCollections.observableArrayList(customers);
         this.filterItemRepos = new FilterItemRepos();
         this.customerNoteRepos = new CustomerNoteRepos();
         fillSearchFilter();
+    }
 
+    private void fillTreeSetCustomers() {
+        List<Customer> customerList = getAllCustomers();
+        for (Customer customer : customerList) {
+            if (customer.getCreateTime() == null) {
+                customer.setCreateTime(LocalDateTime.now());
+            }
+            customers.add(customer);
+        }
     }
 
     public Repos getCustomerRepos() {
@@ -61,6 +92,7 @@ public class CustomerService {
         if (customer.getName() != null) {
             customer.setCustomerNote(setCustomerNote(customer));
         }
+        customer.setCreateTime(LocalDateTime.now());
         this.customerRepos.add(customer);
         this.customers.add(customer);
         this.observableList.add(customer);
@@ -74,9 +106,8 @@ public class CustomerService {
         return customerNoteRepos.getAllCustomers();
     }
 
-    private Set<Customer> getAllCustomers() {
-        List<Customer> customers = customerRepos.getAllCustomers();
-        return new HashSet<>(customers);
+    private List<Customer> getAllCustomers() {
+        return customerRepos.getAllCustomers();
     }
 
     private void fillSearchFilter() {
@@ -713,9 +744,14 @@ public class CustomerService {
 
     private Customer setManagerAndContacts(Customer customer) {
         for (Customer customer1 : customers) {
-            if (customer1.getName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
+            if (customer1.getName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase()) &&
+                    !customer.equals(customer1)) {
                 customer.setContacts(customer1.getContacts());
                 customer.setManager(customer1.getManager());
+                System.out.println("here");
+                System.out.println(customer1);
+                System.out.println(customer.getManager() + " " + customer.getContacts());
+                System.out.println(customer1.getManager() + " " + customer1.getContacts());
                 break;
             }
         }
