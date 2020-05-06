@@ -2,7 +2,6 @@ package com.gms_worldwide.controller;
 
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.service.CustomerService;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +23,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class MainController {
 
@@ -311,6 +309,7 @@ public class MainController {
 
     @FXML
     protected void loadFilterItems() {
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {

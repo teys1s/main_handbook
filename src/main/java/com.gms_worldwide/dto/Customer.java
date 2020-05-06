@@ -26,7 +26,8 @@ public class Customer {
     private LocalDateTime createTime;
 
 
-    public Customer(String name, String connectionName, String connectionType, String platform, String connectionProtocol, String counterpartyType, String area, String contacts, String manager) {
+    public Customer(String name, String connectionName, String connectionType, String platform,
+                    String connectionProtocol, String counterpartyType, String area, String contacts, String manager) {
         this.name = name;
         this.connectionName = connectionName;
         this.connectionType = connectionType;
@@ -174,6 +175,8 @@ public class Customer {
                 ", contacts='" + contacts + '\'' +
                 ", manager='" + manager + '\'' +
                 ", note='" + note + '\'' +
+                ", customerNote=" + customerNote +
+                ", createTime=" + createTime +
                 '}';
     }
 }

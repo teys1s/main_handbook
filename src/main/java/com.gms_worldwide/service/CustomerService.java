@@ -3,16 +3,14 @@ package com.gms_worldwide.service;
 import com.gms_worldwide.dto.Customer;
 import com.gms_worldwide.dto.CustomerNote;
 import com.gms_worldwide.dto.FilterItem;
-import com.gms_worldwide.repos.CustomerNoteRepos;
-import com.gms_worldwide.repos.CustomerRepos;
-import com.gms_worldwide.repos.FilterItemRepos;
-import com.gms_worldwide.repos.Repos;
+import com.gms_worldwide.repos.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 public class CustomerService {
@@ -25,12 +23,13 @@ public class CustomerService {
     private Map<String, String> searchFilter = new HashMap<>();
     private static Comparator<Customer> BY_CREATE_TIME;
     private static Comparator<Customer> BY_ID;
+    private SQLiteRepos sqLiteRepos;
 
     static {
         BY_CREATE_TIME = new Comparator<Customer>() {
             @Override
             public int compare(Customer o1, Customer o2) {
-                return o2.getCreateTime().getSecond() - o1.getCreateTime().getSecond();
+                return (int) (o2.getCreateTime().toEpochSecond(ZoneOffset.UTC) - o1.getCreateTime().toEpochSecond(ZoneOffset.UTC));
             }
         };
     }
@@ -47,11 +46,19 @@ public class CustomerService {
     public CustomerService() {
         this.customerRepos = new CustomerRepos();
         this.customers = new TreeSet<>(BY_CREATE_TIME.thenComparing(BY_ID));
+        sqLiteRepos = new SQLiteRepos();
         fillTreeSetCustomers();
         observableList = FXCollections.observableArrayList(customers);
         this.filterItemRepos = new FilterItemRepos();
         this.customerNoteRepos = new CustomerNoteRepos();
         fillSearchFilter();
+        Customer customer = new Customer("test", "test", "test", "test", "test", "test", "test", "test", "test");
+        customer.setCreateTime(LocalDateTime.now());
+        //sqLiteRepos.addCustomer(customer);
+       /* CustomerNote customerNote = new CustomerNote();
+        customerNote.setCustomerName("test");
+        customerNote.setNote("test");*/
+        //sqLiteRepos.addCustomerNote(customerNote);
     }
 
     private void fillTreeSetCustomers() {
@@ -93,42 +100,38 @@ public class CustomerService {
             customer.setCustomerNote(setCustomerNote(customer));
         }
         customer.setCreateTime(LocalDateTime.now());
-        this.customerRepos.add(customer);
+        //this.customerRepos.add(customer);
+        sqLiteRepos.addCustomer(customer);
         this.customers.add(customer);
         this.observableList.add(customer);
     }
 
     private void addCustomerNote(CustomerNote customerNote) {
-        this.customerNoteRepos.add(customerNote);
+        //this.customerNoteRepos.add(customerNote);
+        sqLiteRepos.addCustomerNote(customerNote);
     }
 
     private List<CustomerNote> getCustomerNotes() {
-        return customerNoteRepos.getAllCustomers();
+        //return customerNoteRepos.getAllCustomers();
+        return sqLiteRepos.getCustomerNotes();
     }
 
     private List<Customer> getAllCustomers() {
-        return customerRepos.getAllCustomers();
+        //return customerRepos.getAllCustomers();
+        return sqLiteRepos.getCustomers();
     }
 
     private void fillSearchFilter() {
-        List<FilterItem> filterItems = filterItemRepos.getFilterTypes();
+        //List<FilterItem> filterItems = filterItemRepos.getFilterTypes();
+        List<FilterItem> filterItems = sqLiteRepos.getFilterItems();
         for (FilterItem filterType : filterItems) {
             searchFilter.put(filterType.getSearchIn(), filterType.getSearchOut());
         }
     }
 
-    private List<Customer> addTestCustomers() {
-        List<Customer> customers = new ArrayList<Customer>();
-        for (int i = 0; i < 5; i++) {
-            String x = Integer.toString(i);
-            Customer customer = new Customer(x, x, x, x, x, x, x, x, x);
-            customers.add(customer);
-        }
-        return customers;
-    }
-
     public void delete(Customer customer) {
-        customerRepos.delete(customer);
+        //customerRepos.delete(customer);
+        sqLiteRepos.deleteCustomer(customer);
         observableList.remove(customer);
         customers.remove(customer);
     }
@@ -142,15 +145,16 @@ public class CustomerService {
         if (customer.getName() != null && isContactsOrManagerChanged) {
             updateManagersAndContacts(customer);
         }
-        customerRepos.update(customer);
-        customers.remove(customer);
+        //customerRepos.update(customer);
+        sqLiteRepos.updateCustomer(customer);
         customers.add(customer);
         observableList.removeAll(observableList);
         observableList.addAll(customers);
     }
 
     private void updateCustomerNote(CustomerNote customerNote) {
-        customerNoteRepos.update(customerNote);
+        //customerNoteRepos.update(customerNote);
+        sqLiteRepos.updateCustomerNote(customerNote);
     }
 
     public void searchCustomer(String text) {
@@ -315,14 +319,11 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
             }
         }
-
-        System.out.println("result: " + result);
 
         return result;
     }
@@ -349,7 +350,6 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
@@ -381,7 +381,6 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
@@ -413,7 +412,6 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
@@ -445,7 +443,6 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
@@ -477,7 +474,6 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
@@ -509,7 +505,6 @@ public class CustomerService {
             for (String string : strings) {
                 stringSet.add(string.trim());
             }
-            System.out.println(stringSet);
             result = "";
             for (String s : stringSet) {
                 result = result.concat(s + "\n");
@@ -667,8 +662,10 @@ public class CustomerService {
                 }
 
                 for (Map.Entry<String, String> item : items.entrySet()) {
+                    searchFilter.put(item.getKey().trim().toUpperCase(),item.getValue().trim().toUpperCase());
                     FilterItem filterItem = new FilterItem(item.getKey().trim().toUpperCase(), item.getValue().trim().toUpperCase());
-                    filterItemRepos.add(filterItem);
+                    //filterItemRepos.add(filterItem);
+                    sqLiteRepos.addFilterItem(filterItem);
                 }
 
             } catch (FileNotFoundException e) {
@@ -725,7 +722,7 @@ public class CustomerService {
             boolean isCustomerNoteExist = false;
             for (CustomerNote customerNote : customerNotes) {
                 if (customerNote.getCustomerName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
-                    customer.setCustomerNote(customerNote);
+                    //customer.setCustomerNote(customerNote);
                     return customerNote;
                 }
             }
@@ -748,10 +745,6 @@ public class CustomerService {
                     !customer.equals(customer1)) {
                 customer.setContacts(customer1.getContacts());
                 customer.setManager(customer1.getManager());
-                System.out.println("here");
-                System.out.println(customer1);
-                System.out.println(customer.getManager() + " " + customer.getContacts());
-                System.out.println(customer1.getManager() + " " + customer1.getContacts());
                 break;
             }
         }
@@ -763,6 +756,7 @@ public class CustomerService {
             if (customer1.getName().trim().toUpperCase().equals(customer.getName().trim().toUpperCase())) {
                 customer1.setManager(customer.getManager());
                 customer1.setContacts(customer.getContacts());
+                sqLiteRepos.updateCustomer(customer1);
             }
         }
 

@@ -6,7 +6,6 @@ import javax.persistence.Persistence;
 
 public class Repos<P> {
 
-
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("main");
     protected EntityManager em = emf.createEntityManager();
 

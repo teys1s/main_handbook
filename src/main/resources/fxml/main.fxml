@@ -12,14 +12,11 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#loadFromFile" text="Load customers" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFromFileWithAutoFilling" text="Load with auto filling" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
               <MenuItem mnemonicParsing="false" onAction="#add" text="Add Customer" />
-                  <MenuItem mnemonicParsing="false" onAction="#loadFilterItems" text="Add filter item" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadFilterItems" text="Add filter items" />
             </items>
           </Menu>
+          <Menu mnemonicParsing="false" text="Edit" />
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#openAboutDialog" text="About" />
