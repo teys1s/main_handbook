@@ -14,7 +14,7 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
         //stage.setMaximized(true);
-        stage.setTitle("Handbook GMS");
+        stage.setTitle("Handbook");
         stage.setScene(new Scene(root));
         stage.show();
 

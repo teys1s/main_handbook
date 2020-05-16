@@ -335,8 +335,8 @@ public class MainController {
     protected void openAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About Handbook");
-        alert.setHeaderText("GMS Handbook. \n Version 1.1");
-        alert.setContentText("\n\n\n Copyright © 2020 GMSU. All rights reserved.");
+        alert.setHeaderText("Handbook. \n Version 1.1");
+        alert.setContentText("\n\n\n Copyright © 2020. All rights reserved.");
 
         alert.showAndWait();
 
